@@ -240,12 +240,15 @@ class QAntumCLI {
     }
 
     async run(command, args = {}) {
-        // Ghost and Pre-Cog have their own banners
-        if (command !== 'ghost' && command !== 'precog') {
+        // God Mode, Ghost and Pre-Cog have their own banners
+        if (command !== 'ghost' && command !== 'precog' && command !== 'god') {
             this.showBanner();
         }
         
         switch (command) {
+            case 'god':
+                await this.runGodMode(args);
+                break;
             case 'test':
                 await this.runTests(args);
                 break;
@@ -281,6 +284,39 @@ class QAntumCLI {
                 break;
             default:
                 this.showHelp();
+        }
+    }
+
+    // 👑 GOD MODE Commands
+    async runGodMode(args) {
+        const { 
+            activateGodMode, 
+            displayGodModeStatus, 
+            godModeTest, 
+            godModeHealing, 
+            godModeSwarm,
+            showGodModeHelp 
+        } = await import('./god-mode-cli.js');
+        const subCommand = process.argv[3];
+        
+        switch (subCommand) {
+            case 'activate':
+                await activateGodMode();
+                break;
+            case 'status':
+                displayGodModeStatus();
+                break;
+            case 'test':
+                await godModeTest();
+                break;
+            case 'heal':
+                await godModeHealing();
+                break;
+            case 'swarm':
+                await godModeSwarm();
+                break;
+            default:
+                showGodModeHelp();
         }
     }
 
@@ -536,6 +572,14 @@ class QAntumCLI {
         logger.debug(`
 ${colors.bold.white('Usage:')} qantum <command> [options]
 
+${chalk.hex('#FFD700').bold('★ GOD MODE (👑) - Supreme Power:')}
+  ${chalk.hex('#FFD700')('god')}          ${chalk.hex('#FF4500')('👑 ACTIVATE SUPREME POWER - ALL ENGINES MAXIMUM!')}
+  ${colors.dim('$ qantum god activate')}    Initiate God Mode activation sequence
+  ${colors.dim('$ qantum god status')}      Show supreme engine status
+  ${colors.dim('$ qantum god test')}        Execute tests with infinite power
+  ${colors.dim('$ qantum god heal')}        Supreme self-healing demo
+  ${colors.dim('$ qantum god swarm')}       Infinite swarm execution
+
 ${colors.bold.white('Commands:')}
   ${colors.cyan('test')}        Run all test suites
   ${colors.cyan('status')}      Show engine status
@@ -580,6 +624,7 @@ ${colors.bold.white('Options:')}
   ${colors.muted('--shadow')}        Enable shadow mode (production testing)
 
 ${colors.bold.white('Examples:')}
+  ${chalk.hex('#FFD700')('$ qantum god activate')}           ${chalk.hex('#FF4500')('← TRY THIS FOR SUPREME POWER!')}
   ${colors.dim('$ qantum test --workers=8')}
   ${colors.dim('$ qantum ghost login.spec.ts')}
   ${colors.dim('$ qantum precog HEAD~3')}
@@ -587,7 +632,7 @@ ${colors.bold.white('Examples:')}
   ${colors.dim('$ qantum swarm run ./tests 500')}
   ${colors.dim('$ qantum cognitive run https://example.com')}
 
-${colors.muted('Powered by QAntum AI Engine v1.0.0.0 - "Tests that write themselves!"')}
+${colors.muted('Powered by QAntum AI Engine v1.0.0.0 - "With great power comes great testing!"')}
 `);
     }
 
