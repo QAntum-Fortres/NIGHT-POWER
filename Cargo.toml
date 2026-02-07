@@ -1,0 +1,10 @@
+[package]
+name = "lwas_cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+lwas_core = { path = "../lwas_core" }
+lwas_parser = { path = "../lwas_parser" }
+clap = { version = "4.4", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
