@@ -85,6 +85,10 @@
     "**/*.spec.ts",
     "**/*.test.ts",
     "scripts/logs",
+    "scripts/src",
+    "scripts/examples",
+    "scripts/security",
+    "scripts/swarm",
     "data/vectors",
     "data/checkpoints",
     "data/models"

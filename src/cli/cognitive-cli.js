@@ -1,5 +1,3 @@
-import { logger } from '../api/unified/utils/logger';
-
 #!/usr/bin/env node
 
 /**
@@ -17,11 +15,19 @@ import { logger } from '../api/unified/utils/logger';
  * @phase 81-90
  */
 
-const { program } = require('commander');
-const chalk = require('chalk');
-const ora = require('ora');
-const fs = require('fs');
-const path = require('path');
+import { program } from 'commander';
+import chalk from 'chalk';
+import ora from 'ora';
+import fs from 'fs';
+import path from 'path';
+
+// Simple logger wrapper for CLI output
+const logger = {
+    debug: (...args) => console.log(...args),
+    error: (...args) => console.error(...args),
+    info: (...args) => console.info(...args),
+    warn: (...args) => console.warn(...args)
+};
 
 // ASCII Art Banner
 const banner = `

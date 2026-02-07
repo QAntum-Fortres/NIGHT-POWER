@@ -4,9 +4,9 @@
     "machineId": "fa6aa7e937c4e782",
     "createdAt": "2025-12-28T07:17:56.210Z",
     "entryCount": 2,
-    "totalSize": 1739,
-    "manifestChecksum": "acef8c3f65f9f11d413675382ab137e447d3e77d7fefea60038eb03e61aaad7a",
-    "lastSync": "2026-01-17T00:05:02.572Z"
+    "totalSize": 1579,
+    "manifestChecksum": "11d6e239e044755dab01f20f9002de495a25ffce405d2c393c6d700c88c69378",
+    "lastSync": "2026-02-07T03:43:56.143Z"
   },
   "salt": "2Yfofj0OVxOcWTsXeK2piI1UW61Z/7VqMfalrTf/nhw=",
   "entries": [
@@ -17,16 +17,16 @@
         "type": "mutations",
         "payload": {
           "algorithm": "aes-256-gcm",
-          "iv": "UcQbO8hg5H4fEaAj",
-          "data": "ebTLAsXEyPqdoHMXaaBDMC+oU6yud1iCiijvxOI5rYhTKd/1cE4hqovBnOI1Yqj6YTVy4Kv5ZvAImz6K0AENikO9mPaPIaNTBVZh8VrIkFoKPHevUPRj/9dWejazGtJxqB7zLO6BFGC1FPCnFfukwttiacOHxeCkLJwlETcQAVCrJllBC0AynpgZRhk6UZVCud1uNmLV3TpzfOV1CHshqxbYVmclzyTS2Ha93mQ+fj6mHDPc7vUwbDsu38+lHjWdRWYMlg7w0/hCuh5SE08Ad/cciHcqwN7AH1+WpqcnRZui1h/U1etyi/H8jMsanzx8UrksmzygP800W1d5uge2I7mcddydsbwvQoEg7ZSJ2RA+9SdVaEOYrULifXlwzSTi6PAsFSTqMZG+GQ9tUwkYcjZrUqWpev6zRF4ekUjO1ju6oI3t0C/LZ/+bl9Vd11pPCa0MyP9M+8fHrCMdYseaEqIxQRMAPGskqMQz/y+TRElCwX0boZHARupE6lr1llx+JW0InqAXPYLEkA21MueslmPnFEyTy+PPQWg73XkC1OoY6NPZ/e5+enwFDu2/AchkU4WJiX4FHJjHozaZOmqidgjWPqgGn5ehNgJOk7d16q5xQr416Ayxm2fe8Dt4YmUfukoQ9NEijfOXIAAtAsb+yILykct9NmkNWASAWsuJ8jRV6TnFztF0lmk2DKRgbRukWgAEm8YvcQmLr/gv/VMxKbe83O6pojjG/IKOdrtElEI8+KAH8OQk7s8XJyUmA+qHUR4e1m0/gX+SQI3SmjM+8rrKKcgdvBUJFhO7UQs5abo3KZC5FQUb+A3/MsxvCD6PDQRgrQP1Czr2gJ2/4T2a+VUvB5fRakWtMkVBM++paHa/gjd9F9DsP6nHZcX+sRUv8ubpKvDY+eHnyVeMsfkNAB2oOudV7qJt3/ZDVBz3rrTvt6UUpLi8nA==",
-          "authTag": "crJyvMrOl0wZCORIuvH7Rg==",
+          "iv": "fQKqaMEIHZjPlDft",
+          "data": "5gFtU6YgUwHahzzSx1GecoOSm1Ml5VvsbGyE+YXXehzg5dQAOTHxrpgnpxtkPQe2Mx/QAY/syJjAv2CAGFM9v7st9dhNiGl27YrzFpou4VRP68llKxlUnyz/wvRagWCUCVt2niaEMsvsD7XiG4feJmbRSc+6GifBFPm21rMpuojFZklyJQ5oFzPnqmCv/Z5D/MhT1+1sH0H8tz1vF7cXNzD6KyamCOR8GjSJnw74UFYWi3Zu7uRPkypC+zD6D3/DDhBwWyT65thCoVbPzGldGkos3WHRWTzqx2OR1s7yJQCSXDv5bvaN6fIjKRaKHoRhk0o1v7kscg+mx204aBWQsT6unRCDLA9DMzNpTSuv9d5pLC2k2JCykSeeTTOpajszIdZX5ATOYrgqC/RAjBxt9U7II6SsKgDjgd2sJTQ6PpL8BFIs5pfTd+CMlDhnloB3/W548ju0Xxv3XJQFg4tL4g00eqM2t0fTJMZiJn7RG+hI8NT2+KS2hVvDv8AHU32P3vg2zLSTrVSczoPF+3U3ZCvhFA9R/KgGNBlodvz6NnLUxsPcLyHQyrq5WJjk/Q4t1ClalkdGOuNctct9Gi0dLYlhoA2O5PPvQ+FlwhSmMwqAcvdpq7i2/z5PlyZhBSXfQLbugZ6Kn15jq3rzLvtHR3xIACdCoPpXlWeuAK7eRLmIZjIt7GdNWfWL/pX7wsaoDk6KmLdDV5K4veJZRP7FsHxuCby9lJ4zQ5pYlI5lwmudxr1bNvRtVfBjU8G9KvfxAGT5TLpi9Uw2G5aKrovLMeOcGsRTR/hkEdZTOP/S1zmkSb5RE+2Vbs1mA8rz83LpMISzyayPStHOsVyCl6za+Sq/CAqa0xtL/psXec7LBYSjUvDNZ9hj5mI1ziT0FWqtfDuJ6lkBDGo=",
+          "authTag": "eArUirvb6lXXOOnbGLcJmw==",
           "salt": "2Yfofj0OVxOcWTsXeK2piI1UW61Z/7VqMfalrTf/nhw=",
-          "encryptedAt": "2026-01-17T00:05:02.367Z",
+          "encryptedAt": "2026-02-07T03:43:55.850Z",
           "version": 1
         },
-        "checksum": "2305bc9ce5ad05c069d046fc82802988cbb3979c9b71a969b3f6353f3fed3b9b",
-        "lastModified": "2026-01-17T00:05:02.367Z",
-        "originalSize": 1621
+        "checksum": "df260af735ec866ddfeaebec47100a47b649673ee3b28d09f9501673d6abe45e",
+        "lastModified": "2026-02-07T03:43:55.850Z",
+        "originalSize": 1461
       }
     ],
     [
@@ -36,15 +36,15 @@
         "type": "metrics",
         "payload": {
           "algorithm": "aes-256-gcm",
-          "iv": "zZIAVUmiGnBnqXZW",
-          "data": "MGCXe8gs4Zqdrq2vGAJtQ+HL68TSXnUazbX1eOiAI7ZQPjmy4yD5BejR30MpKchZu9fQx5kncgEmJLL6yICehJRrosIbYB+ri3lozi4A8ctTifkX81pfsPU6iM7uipA6sZzqfTruZ80DzeS2T4dPM1IiiEjsx9vh0bfS3G3FUXib6JSKYRXft29yENT7kKjJN6I2m5ipMhX0Pl1cB2Gkmw==",
-          "authTag": "0WrgxstaPHahTVzDF/pUmg==",
+          "iv": "Ys8M2318cXVgFkB8",
+          "data": "xi6HqrYufrkh9JmHqJcIfGX67G54RGw2RQnwS/gxo3a9jAism+S0LtkiPl84y0e63JsPMCBgvkrzXbZrgzUm0b6w0iugE+irrQxTo/iIw1/h38PFj/RD4qV0jGebjKJGVGe9tK3qzcNpi0v4c+QGOAP6+2K86XKhDgR6kEQPVGVGI51iH0e0ubA2A3/ZAC3/FZTP8aErYfAduQ8+6ZBb6Q==",
+          "authTag": "mbsV9nR4RDgKqhnpWIolYg==",
           "salt": "2Yfofj0OVxOcWTsXeK2piI1UW61Z/7VqMfalrTf/nhw=",
-          "encryptedAt": "2026-01-17T00:05:02.571Z",
+          "encryptedAt": "2026-02-07T03:43:56.143Z",
           "version": 1
         },
         "checksum": "8b018c78d97914b9ff23bd690b32152cf2bce3472d2b096afb55aa0630478ebe",
-        "lastModified": "2026-01-17T00:05:02.571Z",
+        "lastModified": "2026-02-07T03:43:56.143Z",
         "originalSize": 118
       }
     ]

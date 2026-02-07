@@ -1,5 +1,3 @@
-import { logger } from '../api/unified/utils/logger';
-
 #!/usr/bin/env node
 /**
  * 🧠 QANTUM - The Hacker CLI
@@ -13,9 +11,18 @@ import { logger } from '../api/unified/utils/logger';
  * @version 1.0.0-QANTUM-PRIME
  */
 
-const chalk = require('chalk');
-const figlet = require('figlet');
-const cliProgress = require('cli-progress');
+import chalk from 'chalk';
+import cliProgress from 'cli-progress';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+// Simple logger wrapper for CLI output
+const logger = {
+    debug: (...args) => console.log(...args),
+    error: (...args) => console.error(...args),
+    info: (...args) => console.info(...args),
+    warn: (...args) => console.warn(...args)
+};
 
 // ============================================================
 // ASCII ART BANNER
@@ -233,12 +240,15 @@ class QAntumCLI {
     }
 
     async run(command, args = {}) {
-        // Ghost and Pre-Cog have their own banners
-        if (command !== 'ghost' && command !== 'precog') {
+        // God Mode, Ghost and Pre-Cog have their own banners
+        if (command !== 'ghost' && command !== 'precog' && command !== 'god') {
             this.showBanner();
         }
         
         switch (command) {
+            case 'god':
+                await this.runGodMode(args);
+                break;
             case 'test':
                 await this.runTests(args);
                 break;
@@ -277,9 +287,42 @@ class QAntumCLI {
         }
     }
 
+    // 👑 GOD MODE Commands
+    async runGodMode(args) {
+        const { 
+            activateGodMode, 
+            displayGodModeStatus, 
+            godModeTest, 
+            godModeHealing, 
+            godModeSwarm,
+            showGodModeHelp 
+        } = await import('./god-mode-cli.js');
+        const subCommand = process.argv[3];
+        
+        switch (subCommand) {
+            case 'activate':
+                await activateGodMode();
+                break;
+            case 'status':
+                displayGodModeStatus();
+                break;
+            case 'test':
+                await godModeTest();
+                break;
+            case 'heal':
+                await godModeHealing();
+                break;
+            case 'swarm':
+                await godModeSwarm();
+                break;
+            default:
+                showGodModeHelp();
+        }
+    }
+
     // 👻 Ghost Protocol Commands
     async runGhostProtocol(args) {
-        const { ghostCapture, ghostList } = require('./ghost-precog-cli');
+        const { ghostCapture, ghostList } = await import('./ghost-precog-cli.js');
         const subCommand = process.argv[3];
         
         if (subCommand === 'list') {
@@ -291,7 +334,7 @@ class QAntumCLI {
 
     // 🔮 Pre-Cog Commands
     async runPreCog(args) {
-        const { precogAnalyze, precogRun } = require('./ghost-precog-cli');
+        const { precogAnalyze, precogRun } = await import('./ghost-precog-cli.js');
         const subCommand = process.argv[3];
         
         if (subCommand === 'run') {
@@ -303,7 +346,7 @@ class QAntumCLI {
 
     // 🏰 Fortress Commands
     async runFortress(args) {
-        const { fortressObfuscate, fortressLicense } = require('./fortress-swarm-cli');
+        const { fortressObfuscate, fortressLicense } = await import('./fortress-swarm-cli.js');
         const subCommand = process.argv[3];
         const arg = process.argv[4];
         
@@ -320,7 +363,7 @@ class QAntumCLI {
 
     // 🐝 Swarm Commands
     async runSwarm(args) {
-        const { swarmRun, swarmStatus, swarmDashboard } = require('./fortress-swarm-cli');
+        const { swarmRun, swarmStatus, swarmDashboard } = await import('./fortress-swarm-cli.js');
         const subCommand = process.argv[3];
         const arg = process.argv[4];
         
@@ -359,7 +402,7 @@ class QAntumCLI {
             
             if (arg) {
                 try {
-                    const { AutonomousExplorer } = require('../cognitive/autonomous-explorer');
+                    const { AutonomousExplorer } = await import('../cognitive/autonomous-explorer.js');
                     const explorer = new AutonomousExplorer({
                         maxPages: 50,
                         parallelWorkers: 4
@@ -375,11 +418,11 @@ class QAntumCLI {
             log('This generates tests from discovered site maps', 'info');
             
             try {
-                const fs = require('fs');
+                const fs = await import('fs');
                 const sitemapPath = arg || './exploration-data/sitemap.json';
                 
                 if (fs.existsSync(sitemapPath)) {
-                    const { AutoTestFactory } = require('../cognitive/auto-test-factory');
+                    const { AutoTestFactory } = await import('../cognitive/auto-test-factory.js');
                     const siteMapData = JSON.parse(fs.readFileSync(sitemapPath, 'utf-8'));
                     
                     const factory = new AutoTestFactory();
@@ -401,7 +444,7 @@ class QAntumCLI {
         } else if (subCommand === 'heal') {
             log('Self-Healing V2 Status', 'healing');
             try {
-                const { SelfHealingV2 } = require('../cognitive/self-healing-v2');
+                const { SelfHealingV2 } = await import('../cognitive/self-healing-v2.js');
                 const healer = new SelfHealingV2();
                 const stats = healer.getStatistics();
                 
@@ -419,7 +462,7 @@ class QAntumCLI {
             
             if (arg) {
                 try {
-                    const { CognitiveOrchestrator } = require('../cognitive/index');
+                    const { CognitiveOrchestrator } = await import('../cognitive/index.js');
                     const orchestrator = new CognitiveOrchestrator();
                     const result = await orchestrator.autonomousRun(arg);
                     log(`Pipeline complete: ${result.testsGenerated} tests generated`, 'success');
@@ -529,6 +572,14 @@ class QAntumCLI {
         logger.debug(`
 ${colors.bold.white('Usage:')} qantum <command> [options]
 
+${chalk.hex('#FFD700').bold('★ GOD MODE (👑) - Supreme Power:')}
+  ${chalk.hex('#FFD700')('god')}          ${chalk.hex('#FF4500')('👑 ACTIVATE SUPREME POWER - ALL ENGINES MAXIMUM!')}
+  ${colors.dim('$ qantum god activate')}    Initiate God Mode activation sequence
+  ${colors.dim('$ qantum god status')}      Show supreme engine status
+  ${colors.dim('$ qantum god test')}        Execute tests with infinite power
+  ${colors.dim('$ qantum god heal')}        Supreme self-healing demo
+  ${colors.dim('$ qantum god swarm')}       Infinite swarm execution
+
 ${colors.bold.white('Commands:')}
   ${colors.cyan('test')}        Run all test suites
   ${colors.cyan('status')}      Show engine status
@@ -573,6 +624,7 @@ ${colors.bold.white('Options:')}
   ${colors.muted('--shadow')}        Enable shadow mode (production testing)
 
 ${colors.bold.white('Examples:')}
+  ${chalk.hex('#FFD700')('$ qantum god activate')}           ${chalk.hex('#FF4500')('← TRY THIS FOR SUPREME POWER!')}
   ${colors.dim('$ qantum test --workers=8')}
   ${colors.dim('$ qantum ghost login.spec.ts')}
   ${colors.dim('$ qantum precog HEAD~3')}
@@ -580,7 +632,7 @@ ${colors.bold.white('Examples:')}
   ${colors.dim('$ qantum swarm run ./tests 500')}
   ${colors.dim('$ qantum cognitive run https://example.com')}
 
-${colors.muted('Powered by QAntum AI Engine v1.0.0.0 - "Tests that write themselves!"')}
+${colors.muted('Powered by QAntum AI Engine v1.0.0.0 - "With great power comes great testing!"')}
 `);
     }
 
@@ -598,4 +650,4 @@ const command = args[0] || 'help';
 const cli = new QAntumCLI();
 cli.run(command).catch(console.error);
 
-module.exports = { QAntumCLI, log, colors, displayEngineStatus, displayTestRun, displayHealing };
+export { QAntumCLI, log, colors, displayEngineStatus, displayTestRun, displayHealing };
