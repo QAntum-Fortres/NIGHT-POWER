@@ -1,0 +1,16 @@
+{
+  "domainName": "pre-cog",
+  "layer": "CHEMISTRY",
+  "purpose": "pre-cog Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 813,
+  "healthScore": 100,
+  "integrityHash": "dc347d7b2e49eafa",
+  "lastUpdated": "2025-12-30T20:50:15.859Z",
+  "violations": []
+}

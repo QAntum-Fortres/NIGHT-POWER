@@ -1,0 +1,16 @@
+{
+  "domainName": "search",
+  "layer": "CHEMISTRY",
+  "purpose": "search Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 760,
+  "healthScore": 100,
+  "integrityHash": "895924e231e15828",
+  "lastUpdated": "2025-12-30T20:50:15.868Z",
+  "violations": []
+}

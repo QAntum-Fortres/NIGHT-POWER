@@ -1,0 +1,16 @@
+{
+  "domainName": "reports",
+  "layer": "REALITY",
+  "purpose": "reports Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 1,
+  "lineCount": 633,
+  "healthScore": 100,
+  "integrityHash": "9ba3424f0f1c9517",
+  "lastUpdated": "2025-12-30T20:50:15.863Z",
+  "violations": []
+}

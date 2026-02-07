@@ -1,0 +1,31 @@
+[package]
+name = "qantum-physics-core"
+version = "1.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# NAPI-RS: Node.js ↔ Rust Bridge
+napi = { version = "2", features = ["async"] }
+napi-derive = "2"
+sysinfo = "0.29"
+
+# CUDA Support (RTX 4050)
+# cudarc = { version = "0.9", features = ["driver"] }
+
+# Math & Performance
+rayon = "1.8"         # CPU Parallelism (fallback)
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rand = "0.8"
+
+[build-dependencies]
+napi-build = "2"
+
+[profile.release]
+lto = true            # Link-Time Optimization
+codegen-units = 1     # Maximum optimization
+opt-level = 3         # Aggressive optimizations
+strip = true          # Remove debug symbols

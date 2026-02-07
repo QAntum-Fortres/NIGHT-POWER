@@ -1,0 +1,21 @@
+{
+  "domainName": "behavior",
+  "layer": "CHEMISTRY",
+  "purpose": "behavior Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 1065,
+  "healthScore": 90,
+  "integrityHash": "20a941e2678fc11a",
+  "lastUpdated": "2025-12-30T20:50:15.787Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "behavior is isolated - no dependencies or dependents",
+      "source": "behavior"
+    }
+  ]
+}

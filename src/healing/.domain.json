@@ -1,0 +1,16 @@
+{
+  "domainName": "healing",
+  "layer": "BIOLOGY",
+  "purpose": "Self-Healing System - Autonomous recovery",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 3,
+  "lineCount": 1290,
+  "healthScore": 100,
+  "integrityHash": "9dcedfc89beafcf3",
+  "lastUpdated": "2025-12-30T20:50:15.835Z",
+  "violations": []
+}

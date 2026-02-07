@@ -1,0 +1,21 @@
+{
+  "domainName": "ai",
+  "layer": "CHEMISTRY",
+  "purpose": "ai Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 995,
+  "healthScore": 90,
+  "integrityHash": "bac8c9b8927ec851",
+  "lastUpdated": "2025-12-30T20:50:15.772Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "ai is isolated - no dependencies or dependents",
+      "source": "ai"
+    }
+  ]
+}

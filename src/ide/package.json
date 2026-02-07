@@ -1,0 +1,224 @@
+{
+  "name": "qantum-omega-sidebar",
+  "displayName": "QAntum OMEGA - Sovereign Sidebar",
+  "description": "THE GROQ ASCENSION - Llama 3.3 70B + RTX 4050 Ollama Fallback",
+  "version": "30.6.4",
+  "publisher": "qantum-empire",
+  "author": {
+    "name": "Димитър Продромов (Dimitar Prodromov)",
+    "email": "dimitar.prodromov@qantum.dev"
+  },
+  "license": "PROPRIETARY",
+  "icon": "assets/qantum-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/papica777-eng/MrMindQATool.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "agent",
+    "coding-assistant",
+    "autocomplete",
+    "neural",
+    "qantum",
+    "omega"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "qantum-empire",
+          "title": "QAntum Empire",
+          "icon": "resources/qantum-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "qantum-empire": [
+        {
+          "type": "webview",
+          "id": "qantum.chatView",
+          "name": "AIAgentExpert Console",
+          "contextualTitle": "QAntum OMEGA"
+        },
+        {
+          "type": "webview",
+          "id": "qantum.sovereignView",
+          "name": "Sovereign Terminal",
+          "contextualTitle": "Neural Streaming"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "qantum.askExpert",
+        "title": "Ask AIAgentExpert",
+        "category": "QAntum OMEGA",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "qantum.omegaHeal",
+        "title": "Omega Heal - Fix Current File",
+        "category": "QAntum OMEGA",
+        "icon": "$(heart)"
+      },
+      {
+        "command": "qantum.ghostAudit",
+        "title": "Ghost Audit - Security Scan",
+        "category": "QAntum OMEGA",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "qantum.failoverSwap",
+        "title": "Failover Swap - Switch to Local Agent",
+        "category": "QAntum OMEGA",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "qantum.synthesize",
+        "title": "Synthesize - Generate Code from Intent",
+        "category": "QAntum OMEGA",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "qantum.showMenu",
+        "title": "Show QAntum OMEGA Menu",
+        "category": "QAntum OMEGA",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "qantum.chat",
+        "title": "QAntum Chat - Ask AIAgentExpert",
+        "category": "QAntum OMEGA",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "qantum.status",
+        "title": "QAntum Status - System Report",
+        "category": "QAntum OMEGA",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "qantum.openConsole",
+        "title": "Open Sovereign Console",
+        "category": "QAntum OMEGA",
+        "icon": "$(terminal)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "qantum.askExpert",
+          "group": "qantum@1"
+        },
+        {
+          "command": "qantum.omegaHeal",
+          "group": "qantum@2"
+        },
+        {
+          "command": "qantum.ghostAudit",
+          "group": "qantum@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "qantum.askExpert"
+        },
+        {
+          "command": "qantum.omegaHeal"
+        },
+        {
+          "command": "qantum.ghostAudit"
+        },
+        {
+          "command": "qantum.failoverSwap"
+        },
+        {
+          "command": "qantum.synthesize"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "qantum.askExpert",
+        "key": "ctrl+shift+q",
+        "mac": "cmd+shift+q"
+      },
+      {
+        "command": "qantum.omegaHeal",
+        "key": "ctrl+shift+h",
+        "mac": "cmd+shift+h"
+      },
+      {
+        "command": "qantum.failoverSwap",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "QAntum OMEGA",
+      "properties": {
+        "qantum.serverPort": {
+          "type": "number",
+          "default": 3848,
+          "description": "Port for the Omega IDE Bridge server"
+        },
+        "qantum.enableNeuralOverlay": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Neural Overlay (ghost text completions)"
+        },
+        "qantum.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically start the Omega server on activation"
+        },
+        "qantum.defaultPrecision": {
+          "type": "string",
+          "enum": ["fast", "balanced", "opus"],
+          "default": "balanced",
+          "description": "Default precision level for AI operations"
+        },
+        "qantum.ghostTextDelay": {
+          "type": "number",
+          "default": 500,
+          "description": "Delay in milliseconds before showing ghost text suggestions"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "echo Skipping compile - using pre-built extension.js",
+    "compile": "tsc -p ./tsconfig.extension.json && esbuild ./src/ide/extension.ts --bundle --outfile=./dist/extension.js --external:vscode --format=cjs --platform=node",
+    "watch": "tsc -watch -p ./tsconfig.extension.json",
+    "pretest": "npm run compile",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "@vscode/vsce": "^2.22.0",
+    "esbuild": "^0.19.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "node-fetch": "^2.6.1",
+    "dotenv": "^16.0.0",
+    "ws": "^8.18.0"
+  }
+}

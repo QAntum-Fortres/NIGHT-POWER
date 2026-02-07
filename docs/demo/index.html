@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAntum Interactive Demo | Test. Secure. Dominate.</title>
+    <meta name="description" content="Try QAntum's AI-powered test automation framework in your browser. No installation required.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --qantum-blue: #2563EB;
+            --qantum-dark: #1E293B;
+            --qantum-white: #F8FAFC;
+            --success-green: #22C55E;
+            --warning-amber: #F59E0B;
+            --error-red: #EF4444;
+            --ghost-purple: #8B5CF6;
+            --security-cyan: #06B6D4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--qantum-dark);
+            color: var(--qantum-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(30, 41, 59, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--qantum-blue), var(--ghost-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--qantum-white);
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        .btn-primary {
+            background: var(--qantum-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--qantum-dark) 0%, #0F172A 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--qantum-white), var(--qantum-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(139, 92, 246, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Main Demo Container */
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Code Editor Panel */
+        .editor-panel {
+            background: #0D1117;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .editor-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .editor-dots {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .dot.red { background: #FF5F56; }
+        .dot.yellow { background: #FFBD2E; }
+        .dot.green { background: #27C93F; }
+        
+        .editor-title {
+            margin-left: 1rem;
+            font-size: 0.875rem;
+            opacity: 0.6;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .editor-tabs {
+            display: flex;
+            gap: 0;
+            margin-left: auto;
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--qantum-white);
+            opacity: 0.5;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .tab.active {
+            opacity: 1;
+            background: rgba(37, 99, 235, 0.2);
+            border-bottom: 2px solid var(--qantum-blue);
+        }
+        
+        .code-area {
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            min-height: 400px;
+            overflow: auto;
+        }
+        
+        .code-area pre {
+            margin: 0;
+        }
+        
+        /* Syntax Highlighting */
+        .keyword { color: #FF79C6; }
+        .string { color: #F1FA8C; }
+        .function { color: #50FA7B; }
+        .comment { color: #6272A4; }
+        .variable { color: #BD93F9; }
+        .number { color: #FFB86C; }
+        .property { color: #8BE9FD; }
+        
+        /* Output Panel */
+        .output-panel {
+            background: #0D1117;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .output-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .output-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success-green);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .run-btn {
+            background: linear-gradient(135deg, var(--qantum-blue), var(--ghost-purple));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+        
+        .run-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .output-content {
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            min-height: 400px;
+            overflow: auto;
+        }
+        
+        .output-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.3s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .output-line.success { color: var(--success-green); }
+        .output-line.error { color: var(--error-red); }
+        .output-line.warning { color: var(--warning-amber); }
+        .output-line.info { color: var(--security-cyan); }
+        .output-line.ghost { color: var(--ghost-purple); }
+        
+        /* Feature Demos */
+        .demos-section {
+            padding: 4rem 2rem;
+            background: #0F172A;
+        }
+        
+        .demos-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--qantum-blue);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.2);
+        }
+        
+        .demo-card.active {
+            border-color: var(--qantum-blue);
+            background: rgba(37, 99, 235, 0.1);
+        }
+        
+        .demo-card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-card p {
+            opacity: 0.7;
+            font-size: 0.875rem;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 2rem;
+            background: var(--qantum-dark);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .stat-item h3 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--qantum-blue), var(--ghost-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-item p {
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, #0F172A 0%, var(--qantum-dark) 100%);
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            border: 2px solid var(--ghost-purple);
+            color: var(--ghost-purple);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-ghost:hover {
+            background: var(--ghost-purple);
+            color: white;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            opacity: 0.6;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--qantum-blue);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--qantum-blue), var(--ghost-purple));
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">QAntum</div>
+        <nav class="nav-links">
+            <a href="#demo">Demo</a>
+            <a href="#features">Features</a>
+            <a href="docs/getting-started.html">Docs</a>
+            <a href="docs/api-reference.html">API</a>
+        </nav>
+        <button class="btn-primary" onclick="window.open('https://github.com/papica777-eng/QAntumQATool', '_blank')">
+            ⭐ Star on GitHub
+        </button>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="demo-badge">
+            <span>🎮</span>
+            <span>Interactive Demo - No Installation Required</span>
+        </div>
+        <h1>Experience QAntum Live</h1>
+        <p>Write tests, see results, feel the power. All in your browser.</p>
+    </section>
+    
+    <!-- Main Demo -->
+    <section id="demo" class="demo-container">
+        <!-- Code Editor -->
+        <div class="editor-panel">
+            <div class="editor-header">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <span class="editor-title">qantum-test.ts</span>
+                <div class="editor-tabs">
+                    <button class="tab active" data-demo="basic">Basic</button>
+                    <button class="tab" data-demo="security">Security</button>
+                    <button class="tab" data-demo="ghost">Ghost</button>
+                    <button class="tab" data-demo="ai">AI</button>
+                </div>
+            </div>
+            <div class="code-area">
+                <pre id="code-content"></pre>
+            </div>
+        </div>
+        
+        <!-- Output Panel -->
+        <div class="output-panel">
+            <div class="output-header">
+                <div class="output-title">
+                    <span class="status-indicator"></span>
+                    <span>Test Output</span>
+                </div>
+                <button class="run-btn" onclick="runDemo()">
+                    <span>▶</span>
+                    <span>Run Test</span>
+                </button>
+            </div>
+            <div class="output-content" id="output-content">
+                <div class="output-line info">Click "Run Test" to execute the demo...</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Feature Demos -->
+    <section class="demos-section" id="features">
+        <h2>🚀 Try Different Features</h2>
+        <div class="demo-cards">
+            <div class="demo-card active" data-demo="basic">
+                <div class="demo-card-icon">⚡</div>
+                <h3>Basic Testing</h3>
+                <p>Simple, fast, reliable. See how easy QAntum makes test automation.</p>
+            </div>
+            <div class="demo-card" data-demo="security">
+                <div class="demo-card-icon">🛡️</div>
+                <h3>Security Scanning</h3>
+                <p>Built-in XSS, SQL injection, and CSRF vulnerability detection.</p>
+            </div>
+            <div class="demo-card" data-demo="ghost">
+                <div class="demo-card-icon">👻</div>
+                <h3>Ghost Mode</h3>
+                <p>Undetectable automation. Bypass bot detection effortlessly.</p>
+            </div>
+            <div class="demo-card" data-demo="ai">
+                <div class="demo-card-icon">🤖</div>
+                <h3>AI Self-Healing</h3>
+                <p>Tests that fix themselves when UI changes. No more flaky tests.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>10x</h3>
+                <p>Faster than Selenium</p>
+            </div>
+            <div class="stat-item">
+                <h3>99%</h3>
+                <p>Test Stability</p>
+            </div>
+            <div class="stat-item">
+                <h3>2min</h3>
+                <p>Setup Time</p>
+            </div>
+            <div class="stat-item">
+                <h3>0</h3>
+                <p>Configuration Needed</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to dominate your tests?</h2>
+        <p>Join thousands of developers who've upgraded from Selenium.</p>
+        <div class="cta-buttons">
+            <button class="btn-primary" onclick="copyInstall()">
+                npx qantum init
+            </button>
+            <button class="btn-ghost" onclick="window.open('docs/getting-started.html', '_blank')">
+                Read the Docs
+            </button>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 QAntum by Dimitar Prodromov. All Rights Reserved.</p>
+        <p style="margin-top: 0.5rem;">Test. Secure. Dominate.</p>
+    </footer>
+    
+    <script>
+        // Demo code snippets
+        const demos = {
+            basic: {
+                code: `<span class="comment">// QAntum Basic Test Example</span>
+<span class="keyword">import</span> { qantum } <span class="keyword">from</span> <span class="string">'qantum'</span>;
+
+<span class="function">describe</span>(<span class="string">'Login Flow'</span>, () => {
+  <span class="function">test</span>(<span class="string">'should login successfully'</span>, <span class="keyword">async</span> () => {
+    <span class="comment">// Navigate to login page</span>
+    <span class="keyword">await</span> qantum.<span class="function">goto</span>(<span class="string">'https://app.example.com/login'</span>);
+    
+    <span class="comment">// Fill credentials</span>
+    <span class="keyword">await</span> qantum.<span class="function">fill</span>(<span class="string">'[data-test="email"]'</span>, <span class="string">'user@test.com'</span>);
+    <span class="keyword">await</span> qantum.<span class="function">fill</span>(<span class="string">'[data-test="password"]'</span>, <span class="string">'secure123'</span>);
+    
+    <span class="comment">// Click login button</span>
+    <span class="keyword">await</span> qantum.<span class="function">click</span>(<span class="string">'[data-test="submit"]'</span>);
+    
+    <span class="comment">// Verify redirect to dashboard</span>
+    <span class="keyword">await</span> qantum.<span class="function">expect</span>(qantum.<span class="function">url</span>())
+      .<span class="function">toContain</span>(<span class="string">'/dashboard'</span>);
+    
+    <span class="comment">// Check welcome message</span>
+    <span class="keyword">await</span> qantum.<span class="function">expect</span>(<span class="string">'h1'</span>)
+      .<span class="function">toHaveText</span>(<span class="string">'Welcome back!'</span>);
+  });
+});`,
+                output: [
+                    { type: 'info', text: '🚀 QAntum v23.3.0 starting...' },
+                    { type: 'info', text: '📁 Loading test: Login Flow' },
+                    { type: 'info', text: '🌐 Navigating to https://app.example.com/login' },
+                    { type: 'success', text: '✓ Page loaded in 245ms' },
+                    { type: 'info', text: '📝 Filling email field...' },
+                    { type: 'info', text: '📝 Filling password field...' },
+                    { type: 'info', text: '🖱️ Clicking submit button...' },
+                    { type: 'success', text: '✓ Navigation to /dashboard detected' },
+                    { type: 'success', text: '✓ URL assertion passed' },
+                    { type: 'success', text: '✓ Text assertion passed' },
+                    { type: 'success', text: '' },
+                    { type: 'success', text: '══════════════════════════════════════' },
+                    { type: 'success', text: '✅ TEST PASSED in 1.2s' },
+                    { type: 'success', text: '══════════════════════════════════════' }
+                ]
+            },
+            security: {
+                code: `<span class="comment">// QAntum Security Scanning</span>
+<span class="keyword">import</span> { qantum, security } <span class="keyword">from</span> <span class="string">'qantum'</span>;
+
+<span class="function">describe</span>(<span class="string">'Security Audit'</span>, () => {
+  <span class="function">test</span>(<span class="string">'should pass OWASP checks'</span>, <span class="keyword">async</span> () => {
+    <span class="keyword">await</span> qantum.<span class="function">goto</span>(<span class="string">'https://app.example.com'</span>);
+    
+    <span class="comment">// Run comprehensive security scan</span>
+    <span class="keyword">const</span> <span class="variable">results</span> = <span class="keyword">await</span> security.<span class="function">scan</span>({
+      <span class="property">xss</span>: <span class="keyword">true</span>,
+      <span class="property">sqlInjection</span>: <span class="keyword">true</span>,
+      <span class="property">csrf</span>: <span class="keyword">true</span>,
+      <span class="property">headers</span>: <span class="keyword">true</span>,
+      <span class="property">cookies</span>: <span class="keyword">true</span>,
+      <span class="property">ssl</span>: <span class="keyword">true</span>
+    });
+    
+    <span class="comment">// Assert no critical vulnerabilities</span>
+    <span class="keyword">await</span> qantum.<span class="function">expect</span>(<span class="variable">results</span>.critical)
+      .<span class="function">toBe</span>(<span class="number">0</span>);
+    
+    <span class="comment">// Generate security report</span>
+    <span class="keyword">await</span> security.<span class="function">generateReport</span>(<span class="string">'./security-report.html'</span>);
+  });
+});`,
+                output: [
+                    { type: 'info', text: '🛡️ QAntum Security Scanner v23.3.0' },
+                    { type: 'info', text: '🎯 Target: https://app.example.com' },
+                    { type: 'info', text: '' },
+                    { type: 'info', text: '🔍 Running XSS detection...' },
+                    { type: 'success', text: '✓ No XSS vulnerabilities found' },
+                    { type: 'info', text: '🔍 Running SQL injection tests...' },
+                    { type: 'success', text: '✓ No SQL injection vulnerabilities' },
+                    { type: 'info', text: '🔍 Checking CSRF protection...' },
+                    { type: 'success', text: '✓ CSRF tokens present and valid' },
+                    { type: 'info', text: '🔍 Analyzing security headers...' },
+                    { type: 'warning', text: '⚠ Missing X-Content-Type-Options header' },
+                    { type: 'info', text: '🔍 Checking cookie security...' },
+                    { type: 'success', text: '✓ HttpOnly and Secure flags set' },
+                    { type: 'info', text: '🔍 Validating SSL/TLS...' },
+                    { type: 'success', text: '✓ TLS 1.3 enabled, strong cipher' },
+                    { type: 'info', text: '' },
+                    { type: 'success', text: '══════════════════════════════════════' },
+                    { type: 'success', text: '🛡️ SECURITY SCAN COMPLETE' },
+                    { type: 'success', text: '   Critical: 0 | High: 0 | Medium: 1' },
+                    { type: 'success', text: '   Report: ./security-report.html' },
+                    { type: 'success', text: '══════════════════════════════════════' }
+                ]
+            },
+            ghost: {
+                code: `<span class="comment">// QAntum Ghost Mode - Undetectable Automation</span>
+<span class="keyword">import</span> { qantum, ghost } <span class="keyword">from</span> <span class="string">'qantum'</span>;
+
+<span class="function">describe</span>(<span class="string">'Stealth Operations'</span>, () => {
+  <span class="function">test</span>(<span class="string">'should bypass bot detection'</span>, <span class="keyword">async</span> () => {
+    <span class="comment">// Initialize Ghost Mode</span>
+    <span class="keyword">await</span> ghost.<span class="function">enable</span>({
+      <span class="property">stealth</span>: <span class="string">'maximum'</span>,
+      <span class="property">fingerprint</span>: <span class="string">'randomized'</span>,
+      <span class="property">humanBehavior</span>: <span class="keyword">true</span>,
+      <span class="property">proxyRotation</span>: <span class="keyword">true</span>
+    });
+    
+    <span class="comment">// Navigate to protected site</span>
+    <span class="keyword">await</span> qantum.<span class="function">goto</span>(<span class="string">'https://protected-site.com'</span>);
+    
+    <span class="comment">// Check if we're detected</span>
+    <span class="keyword">const</span> <span class="variable">detected</span> = <span class="keyword">await</span> ghost.<span class="function">isDetected</span>();
+    <span class="keyword">await</span> qantum.<span class="function">expect</span>(<span class="variable">detected</span>).<span class="function">toBe</span>(<span class="keyword">false</span>);
+    
+    <span class="comment">// Perform actions like a human</span>
+    <span class="keyword">await</span> ghost.<span class="function">humanClick</span>(<span class="string">'button.accept'</span>);
+    <span class="keyword">await</span> ghost.<span class="function">humanType</span>(<span class="string">'input.search'</span>, <span class="string">'query'</span>);
+  });
+});`,
+                output: [
+                    { type: 'ghost', text: '👻 QAntum Ghost Mode Activated' },
+                    { type: 'ghost', text: '═══════════════════════════════════════' },
+                    { type: 'info', text: '🎭 Stealth Level: MAXIMUM' },
+                    { type: 'info', text: '🔀 Fingerprint: Randomized' },
+                    { type: 'info', text: '🤖→🧑 Human Behavior: Enabled' },
+                    { type: 'info', text: '🔄 Proxy Rotation: Active' },
+                    { type: 'ghost', text: '' },
+                    { type: 'info', text: '🌐 Navigating to protected-site.com...' },
+                    { type: 'ghost', text: '   ├─ User-Agent: Mozilla/5.0 (Win...)' },
+                    { type: 'ghost', text: '   ├─ WebGL: Spoofed' },
+                    { type: 'ghost', text: '   ├─ Canvas: Randomized' },
+                    { type: 'ghost', text: '   └─ Timezone: Auto-matched' },
+                    { type: 'success', text: '✓ Page loaded successfully' },
+                    { type: 'info', text: '🔍 Running detection check...' },
+                    { type: 'success', text: '✓ Bot detection: BYPASSED' },
+                    { type: 'success', text: '✓ CAPTCHA: Not triggered' },
+                    { type: 'success', text: '✓ Rate limit: Not triggered' },
+                    { type: 'ghost', text: '' },
+                    { type: 'ghost', text: '═══════════════════════════════════════' },
+                    { type: 'success', text: '👻 GHOST MODE TEST PASSED' },
+                    { type: 'ghost', text: '   Detection Status: INVISIBLE' },
+                    { type: 'ghost', text: '═══════════════════════════════════════' }
+                ]
+            },
+            ai: {
+                code: `<span class="comment">// QAntum AI Self-Healing Tests</span>
+<span class="keyword">import</span> { qantum, ai } <span class="keyword">from</span> <span class="string">'qantum'</span>;
+
+<span class="function">describe</span>(<span class="string">'AI-Powered Testing'</span>, () => {
+  <span class="function">test</span>(<span class="string">'should self-heal when UI changes'</span>, <span class="keyword">async</span> () => {
+    <span class="comment">// Enable AI features</span>
+    <span class="keyword">await</span> ai.<span class="function">enable</span>({
+      <span class="property">selfHealing</span>: <span class="keyword">true</span>,
+      <span class="property">smartWait</span>: <span class="keyword">true</span>,
+      <span class="property">autoRetry</span>: <span class="keyword">true</span>,
+      <span class="property">selectorPrediction</span>: <span class="keyword">true</span>
+    });
+    
+    <span class="keyword">await</span> qantum.<span class="function">goto</span>(<span class="string">'https://dynamic-app.com'</span>);
+    
+    <span class="comment">// Old selector that no longer exists</span>
+    <span class="keyword">await</span> qantum.<span class="function">click</span>(<span class="string">'#old-button-id'</span>);
+    <span class="comment">// AI automatically finds the new selector!</span>
+    
+    <span class="comment">// Smart wait for dynamic content</span>
+    <span class="keyword">await</span> ai.<span class="function">waitForContent</span>(<span class="string">'loading complete'</span>);
+    
+    <span class="comment">// Visual assertion</span>
+    <span class="keyword">await</span> ai.<span class="function">visualCompare</span>(<span class="string">'./baseline.png'</span>);
+  });
+});`,
+                output: [
+                    { type: 'info', text: '🤖 QAntum AI Engine v23.3.0' },
+                    { type: 'info', text: '═══════════════════════════════════════' },
+                    { type: 'info', text: '🧠 Self-Healing: ENABLED' },
+                    { type: 'info', text: '⏳ Smart Wait: ENABLED' },
+                    { type: 'info', text: '🔄 Auto-Retry: ENABLED' },
+                    { type: 'info', text: '🎯 Selector Prediction: ENABLED' },
+                    { type: 'info', text: '' },
+                    { type: 'info', text: '🌐 Navigating to dynamic-app.com...' },
+                    { type: 'success', text: '✓ Page loaded' },
+                    { type: 'warning', text: '⚠ Selector #old-button-id not found!' },
+                    { type: 'info', text: '🤖 AI analyzing page structure...' },
+                    { type: 'info', text: '   ├─ Scanning DOM elements...' },
+                    { type: 'info', text: '   ├─ Matching visual patterns...' },
+                    { type: 'info', text: '   └─ Computing similarity scores...' },
+                    { type: 'success', text: '✓ AI found alternative: button.submit-btn' },
+                    { type: 'success', text: '✓ Selector auto-healed! (98% confidence)' },
+                    { type: 'success', text: '✓ Click successful' },
+                    { type: 'info', text: '⏳ Smart waiting for content...' },
+                    { type: 'success', text: '✓ Content detected in 340ms' },
+                    { type: 'info', text: '👁️ Running visual comparison...' },
+                    { type: 'success', text: '✓ Visual match: 99.2% similar' },
+                    { type: 'info', text: '' },
+                    { type: 'success', text: '═══════════════════════════════════════' },
+                    { type: 'success', text: '🤖 AI TEST PASSED' },
+                    { type: 'success', text: '   Self-healed: 1 selector' },
+                    { type: 'success', text: '   Time saved: ~15 minutes' },
+                    { type: 'success', text: '═══════════════════════════════════════' }
+                ]
+            }
+        };
+        
+        let currentDemo = 'basic';
+        let isRunning = false;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCode(currentDemo);
+            
+            // Tab clicks
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentDemo = tab.dataset.demo;
+                    updateCode(currentDemo);
+                    
+                    // Update cards
+                    document.querySelectorAll('.demo-card').forEach(card => {
+                        card.classList.toggle('active', card.dataset.demo === currentDemo);
+                    });
+                });
+            });
+            
+            // Card clicks
+            document.querySelectorAll('.demo-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    currentDemo = card.dataset.demo;
+                    document.querySelectorAll('.demo-card').forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    
+                    // Update tabs
+                    document.querySelectorAll('.tab').forEach(tab => {
+                        tab.classList.toggle('active', tab.dataset.demo === currentDemo);
+                    });
+                    
+                    updateCode(currentDemo);
+                });
+            });
+        });
+        
+        function updateCode(demo) {
+            document.getElementById('code-content').innerHTML = demos[demo].code;
+            document.getElementById('output-content').innerHTML = '<div class="output-line info">Click "Run Test" to execute the demo...</div>';
+            document.getElementById('progress-fill').style.width = '0%';
+        }
+        
+        async function runDemo() {
+            if (isRunning) return;
+            isRunning = true;
+            
+            const output = document.getElementById('output-content');
+            const progress = document.getElementById('progress-fill');
+            output.innerHTML = '';
+            progress.style.width = '0%';
+            
+            const lines = demos[currentDemo].output;
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                const div = document.createElement('div');
+                div.className = `output-line ${line.type}`;
+                div.style.animationDelay = `${i * 0.1}s`;
+                div.textContent = line.text;
+                output.appendChild(div);
+                
+                progress.style.width = `${((i + 1) / lines.length) * 100}%`;
+                
+                await sleep(150 + Math.random() * 100);
+                output.scrollTop = output.scrollHeight;
+            }
+            
+            isRunning = false;
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        function copyInstall() {
+            navigator.clipboard.writeText('npx qantum init');
+            alert('Copied to clipboard: npx qantum init');
+        }
+    </script>
+</body>
+</html>

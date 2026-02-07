@@ -1,0 +1,21 @@
+{
+  "domainName": "generators",
+  "layer": "CHEMISTRY",
+  "purpose": "generators Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 731,
+  "healthScore": 90,
+  "integrityHash": "71db30d5ba8a58dc",
+  "lastUpdated": "2025-12-30T20:50:15.826Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "generators is isolated - no dependencies or dependents",
+      "source": "generators"
+    }
+  ]
+}

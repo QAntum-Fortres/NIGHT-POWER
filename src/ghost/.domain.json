@@ -1,0 +1,19 @@
+{
+  "domainName": "ghost",
+  "layer": "CHEMISTRY",
+  "purpose": "Invisibility & Stealth Layer - Zero-detection automation",
+  "criticality": "HIGH",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [
+    "chronos",
+    "oracle"
+  ],
+  "fileCount": 8,
+  "lineCount": 5126,
+  "healthScore": 100,
+  "integrityHash": "0ec93ba90e25b1fb",
+  "lastUpdated": "2025-12-30T20:50:15.831Z",
+  "violations": []
+}

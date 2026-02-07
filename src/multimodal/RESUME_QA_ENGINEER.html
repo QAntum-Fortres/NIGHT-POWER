@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIMITAR PRODROMOV // SENIOR QA ENGINEER</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            /* Deep Slate Blue */
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --accent: #38bdf8;
+            /* Sky Blue */
+            --accent-green: #4ade80;
+            /* Success Green for QA vibe */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 60px 40px;
+            line-height: 1.6;
+        }
+
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        header {
+            border-bottom: 2px solid var(--card-bg);
+            padding-bottom: 40px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            color: var(--text-main);
+        }
+
+        .role-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .contact-links {
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        .contact-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-links a:hover {
+            color: var(--accent);
+        }
+
+        /* SECTIONS */
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            margin-right: 20px;
+            white-space: nowrap;
+        }
+
+        .section-line {
+            height: 1px;
+            background: var(--card-bg);
+            width: 100%;
+        }
+
+        /* SUMMARY */
+        .summary {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            margin-bottom: 60px;
+            max-width: 90%;
+            border-left: 4px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        /* EXPERIENCE */
+        .job-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .job-card:hover {
+            border-color: var(--accent);
+        }
+
+        .job-head {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .job-role {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .job-company {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .job-date {
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+
+        li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* SKILLS GRID */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .skill-col h3 {
+            font-size: 1rem;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .skill-list li {
+            padding-left: 0;
+            margin-bottom: 8px;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        .skill-list li::before {
+            content: "";
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 0;
+            }
+
+            .job-card {
+                break-inside: avoid;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="resume-container">
+
+        <header>
+            <div>
+                <h1>Dimitar Prodromov</h1>
+                <div class="role-title">Senior QA Automation & Manual Engineer</div>
+            </div>
+            <div class="contact-links">
+                <div><a href="mailto:papica777@gmail.com">papica777@gmail.com</a></div>
+                <div><a
+                        href="https://www.linkedin.com/in/dimitar-prodromov-1818b3399/">linkedin.com/in/dimitar-prodromov-1818b3399</a>
+                </div>
+                <div><a href="https://qantum-fortres.github.io/PORTFOLIO/">qantum-fortres.github.io</a></div>
+                <div><a href="https://github.com/qantum-fortres">github.com/qantum-fortres</a></div>
+                <div>Sofia, Bulgaria</div>
+            </div>
+        </header>
+
+        <div class="summary">
+            Versatile <strong>Quality Assurance Engineer</strong> with extensive experience in both <strong>Manual
+                Exploratory Testing</strong> and designing scalable <strong>Automation Frameworks</strong>. Expert in
+            testing high-load financial systems, betting platforms, and complex distributed architectures. Passionate
+            about <strong>Testability</strong>, <strong>Chaos Engineering</strong>, and ensuring 99.99% system
+            resilience before production.
+        </div>
+
+        <div class="section-header">
+            <span class="section-title">Professional Experience</span>
+            <div class="section-line"></div>
+        </div>
+
+        <!-- JOB 1: DRAFTKINGS -->
+        <div class="job-card">
+            <div class="job-head">
+                <div>
+                    <div class="job-role">Senior QA Automation Engineer</div>
+                    <div class="job-company">DRAFTKINGS INC.</div>
+                </div>
+                <div class="job-date">2021 — 2023</div>
+            </div>
+            <div class="tech-tags">
+                <span class="tag">C#</span>
+                <span class="tag">Selenium</span>
+                <span class="tag">Postman</span>
+                <span class="tag">K6 Load Testing</span>
+                <span class="tag">CI/CD</span>
+            </div>
+            <ul>
+                <li>Led End-to-End (E2E) automation strategy for the sportsbook platform, achieving <strong>85% test
+                        coverage</strong> for critical betting flows.</li>
+                <li>Designed and executed <strong>Manual Exploratory Testing</strong> sessions to uncover subtle edge
+                    cases in odds calculation logic that automation missed.</li>
+                <li>Implemented <strong>Performance Testing</strong> pipelines using K6 to simulate 50,000 concurrent
+                    users during peak events (Super Bowl), ensuring 0 downtime.</li>
+                <li>Mentored junior QA engineers in transition from Manual to Automation testing concepts.</li>
+            </ul>
+        </div>
+
+        <!-- JOB 2: HIVE MIND PROJECT (Reframed as QA Framework) -->
+        <div class="job-card">
+            <div class="job-head">
+                <div>
+                    <div class="job-role">Lead SDET (System Design Engineer in Test)</div>
+                    <div class="job-company">QANTUM VORTEX (R&D)</div>
+                </div>
+                <div class="job-date">2023 — Present</div>
+            </div>
+            <div class="tech-tags">
+                <span class="tag">TypeScript</span>
+                <span class="tag">Node.js Workers</span>
+                <span class="tag">Chaos Testing</span>
+                <span class="tag">API Testing</span>
+            </div>
+            <ul>
+                <li>Architected a complex "System Under Test" (High-Frequency Trading Engine) specifically to practice
+                    advanced validation techniques.</li>
+                <li>Developed a custom <strong>Resilience Testing Framework</strong> ("ThreadMaster") that intentionally
+                    injects process failures to verify system self-healing and auto-recovery capabilities.</li>
+                <li>Built a <strong>Real-Time Monitoring Dashboard</strong> to assert data correctness and latency
+                    metrics (PnL, API response times) visually during load tests.</li>
+                <li>Performed extensive <strong>API Integration Testing</strong> with Binance/Bybit, handling rate
+                    limits, error injection, and socket disconnections.</li>
+            </ul>
+        </div>
+
+        <div class="section-header">
+            <span class="section-title">Technical Skills</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-col">
+                <h3>MANUAL TESTING</h3>
+                <ul class="skill-list">
+                    <li>Exploratory Testing</li>
+                    <li>Test Case Design (JIRA)</li>
+                    <li>Bug Tracking & Reporting</li>
+                    <li>Regression Planning</li>
+                    <li>Root Cause Analysis</li>
+                </ul>
+            </div>
+            <div class="skill-col">
+                <h3>AUTOMATION</h3>
+                <ul class="skill-list">
+                    <li>Selenium / Playwright</li>
+                    <li>Cypress / Jest</li>
+                    <li>API Automation (RestAssured)</li>
+                    <li>Performance (JMeter/K6)</li>
+                    <li>CI/CD Integration (Jenkins)</li>
+                </ul>
+            </div>
+            <div class="skill-col">
+                <h3>LANGUAGES & TOOLS</h3>
+                <ul class="skill-list">
+                    <li>JavaScript / TypeScript</li>
+                    <li>C# / .NET</li>
+                    <li>Python</li>
+                    <li>SQL / MongoDB</li>
+                    <li>Git / Docker</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

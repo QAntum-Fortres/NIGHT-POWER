@@ -1,0 +1,480 @@
+"use strict";
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * GLOBAL AUDIT - Автономна Ерозия на Несъвършенството
+ * ═══════════════════════════════════════════════════════════════════════════════
+ *
+ * "QAntum автономно сканира, анализира и сертифицира външни системи.
+ *  Всяко слабо място е възможност. Всяка уязвимост е бизнес."
+ *
+ * The Global Audit system:
+ * 1. Discovers targets (authorized only)
+ * 2. Performs comprehensive security scan
+ * 3. Issues Integrity Certificates
+ * 4. Generates remediation proposals
+ * 5. Tracks the global security landscape
+ *
+ * @author Димитър Продромов / Mister Mind
+ * @copyright 2026 QAntum Empire. All Rights Reserved.
+ * @version 28.5.0 OMEGA - THE AWAKENING
+ */
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.globalAudit = exports.GlobalAudit = void 0;
+const events_1 = require("events");
+const https = __importStar(require("https"));
+const UniversalIntegrity_1 = require("./UniversalIntegrity");
+const SovereignNucleus_1 = require("./SovereignNucleus");
+const IntentAnchor_1 = require("./IntentAnchor");
+const NeuralInference_1 = require("../physics/NeuralInference");
+const ProposalEngine_1 = require("../intelligence/ProposalEngine");
+// ═══════════════════════════════════════════════════════════════════════════════
+// GLOBAL AUDIT ENGINE
+// ═══════════════════════════════════════════════════════════════════════════════
+class GlobalAudit extends events_1.EventEmitter {
+    static instance;
+    integrity = UniversalIntegrity_1.UniversalIntegrity.getInstance();
+    nucleus = SovereignNucleus_1.SovereignNucleus.getInstance();
+    anchor = IntentAnchor_1.IntentAnchor.getInstance();
+    brain = NeuralInference_1.NeuralInference.getInstance();
+    proposalEngine = ProposalEngine_1.ProposalEngine.getInstance();
+    targets = [];
+    scans = [];
+    globalStats = {
+        totalScans: 0,
+        certificatesIssued: 0,
+        vulnerabilitiesFound: 0,
+        vulnerabilitiesFixed: 0,
+        potentialRevenue: 0,
+    };
+    // Pricing per severity
+    FINDING_VALUE = {
+        INFO: 0,
+        LOW: 100,
+        MEDIUM: 500,
+        HIGH: 1500,
+        CRITICAL: 5000,
+    };
+    constructor() {
+        super();
+        console.log(`
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    🌐 GLOBAL AUDIT INITIALIZED 🌐                              ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║  "Всяко слабо място е възможност за бизнес."                                  ║
+║                                                                               ║
+║  Mode: AUTHORIZED TARGETS ONLY                                                ║
+║  Output: Integrity Certificates + Remediation Proposals                       ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+    `);
+    }
+    static getInstance() {
+        if (!GlobalAudit.instance) {
+            GlobalAudit.instance = new GlobalAudit();
+        }
+        return GlobalAudit.instance;
+    }
+    // ═══════════════════════════════════════════════════════════════════════════
+    // TARGET MANAGEMENT
+    // ═══════════════════════════════════════════════════════════════════════════
+    /**
+     * Add a target for audit
+     * CRITICAL: Authorization must be verified
+     */
+    addTarget(target) {
+        if (!target.authorized) {
+            console.error('❌ [AUDIT] Cannot add unauthorized target');
+            throw new Error('Target must be authorized. Provide authorization documentation.');
+        }
+        const newTarget = {
+            ...target,
+            id: `target_${Date.now()}`,
+        };
+        this.targets.push(newTarget);
+        console.log(`✅ [AUDIT] Target added: ${target.domain}`);
+        this.emit('target:added', newTarget);
+        return newTarget;
+    }
+    /**
+     * Remove a target
+     */
+    removeTarget(targetId) {
+        const index = this.targets.findIndex(t => t.id === targetId);
+        if (index >= 0) {
+            const removed = this.targets.splice(index, 1)[0];
+            console.log(`🗑️ [AUDIT] Target removed: ${removed.domain}`);
+            this.emit('target:removed', removed);
+        }
+    }
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SCANNING
+    // ═══════════════════════════════════════════════════════════════════════════
+    /**
+     * Perform a comprehensive security audit
+     */
+    async audit(targetId) {
+        const target = this.targets.find(t => t.id === targetId);
+        if (!target) {
+            throw new Error(`Target not found: ${targetId}`);
+        }
+        if (!target.authorized) {
+            return {
+                id: `scan_${Date.now()}`,
+                target,
+                startedAt: new Date(),
+                completedAt: new Date(),
+                status: 'UNAUTHORIZED',
+                findings: [],
+                score: 0,
+            };
+        }
+        console.log(`
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    🔍 SECURITY AUDIT IN PROGRESS 🔍                            ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║  Target: ${target.domain.padEnd(62)}║
+║  Type: ${target.type.padEnd(65)}║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+    `);
+        const scan = {
+            id: `scan_${Date.now()}`,
+            target,
+            startedAt: new Date(),
+            status: 'IN_PROGRESS',
+            findings: [],
+            score: 100,
+        };
+        this.scans.push(scan);
+        this.emit('scan:start', scan);
+        try {
+            // Verify authorization again
+            const verified = await this.anchor.verifyAction({
+                type: 'SECURITY_AUDIT',
+                target: target.domain,
+                description: `Authorized security audit of ${target.domain}`,
+            });
+            if (!verified.isApproved) {
+                scan.status = 'UNAUTHORIZED';
+                return scan;
+            }
+            // Run all scan modules
+            console.log('🔐 [SCAN] Running security checks...');
+            const findings = [];
+            // 1. SSL/TLS Check
+            console.log('   ├─ SSL/TLS Configuration');
+            const sslFindings = await this.checkSSL(target.domain);
+            findings.push(...sslFindings);
+            // 2. Headers Check
+            console.log('   ├─ Security Headers');
+            const headerFindings = await this.checkHeaders(target.domain);
+            findings.push(...headerFindings);
+            // 3. Information Disclosure
+            console.log('   ├─ Information Disclosure');
+            const infoFindings = await this.checkInfoDisclosure(target.domain);
+            findings.push(...infoFindings);
+            // 4. Common Vulnerabilities
+            console.log('   ├─ Common Vulnerabilities');
+            const commonFindings = await this.checkCommonVulns(target.domain);
+            findings.push(...commonFindings);
+            // 5. AI-Powered Analysis
+            console.log('   └─ AI-Powered Deep Analysis');
+            const aiFindings = await this.performAIAnalysis(target);
+            findings.push(...aiFindings);
+            scan.findings = findings;
+            scan.score = this.calculateScore(findings);
+            scan.status = 'COMPLETED';
+            scan.completedAt = new Date();
+            // Update stats
+            this.globalStats.totalScans++;
+            this.globalStats.vulnerabilitiesFound += findings.filter(f => f.severity !== 'INFO').length;
+            // Calculate potential revenue
+            const revenue = findings.reduce((sum, f) => sum + this.FINDING_VALUE[f.severity], 0);
+            this.globalStats.potentialRevenue += revenue;
+            this.emit('scan:complete', scan);
+            console.log(`
+✅ [AUDIT] Complete
+   Findings: ${findings.length}
+   Score: ${scan.score}/100
+   Potential Revenue: $${revenue.toLocaleString()}
+      `);
+            return scan;
+        }
+        catch (error) {
+            scan.status = 'FAILED';
+            scan.completedAt = new Date();
+            console.error('❌ [AUDIT] Scan failed:', error);
+            this.emit('scan:error', { scan, error });
+            return scan;
+        }
+    }
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SCAN MODULES
+    // ═══════════════════════════════════════════════════════════════════════════
+    async checkSSL(domain) {
+        const findings = [];
+        try {
+            // Check if HTTPS is available
+            const httpsAvailable = await this.checkHTTPS(domain);
+            if (!httpsAvailable) {
+                findings.push({
+                    id: `finding_${Date.now()}_ssl`,
+                    type: 'SENSITIVE_DATA',
+                    severity: 'HIGH',
+                    title: 'HTTPS Not Available',
+                    description: `The domain ${domain} does not support HTTPS or has an invalid certificate.`,
+                    remediation: 'Configure a valid SSL/TLS certificate. Consider using Let\'s Encrypt.',
+                    cwe: 'CWE-311',
+                    qantumCanFix: true,
+                });
+            }
+        }
+        catch {
+            // Connection issues
+        }
+        return findings;
+    }
+    checkHTTPS(domain) {
+        return new Promise((resolve) => {
+            const req = https.request({
+                hostname: domain,
+                port: 443,
+                method: 'HEAD',
+                timeout: 5000,
+            }, () => {
+                resolve(true);
+            });
+            req.on('error', () => resolve(false));
+            req.on('timeout', () => {
+                req.destroy();
+                resolve(false);
+            });
+            req.end();
+        });
+    }
+    async checkHeaders(domain) {
+        const findings = [];
+        // Required security headers
+        const requiredHeaders = [
+            { name: 'Strict-Transport-Security', severity: 'MEDIUM' },
+            { name: 'X-Content-Type-Options', severity: 'LOW' },
+            { name: 'X-Frame-Options', severity: 'MEDIUM' },
+            { name: 'Content-Security-Policy', severity: 'MEDIUM' },
+            { name: 'X-XSS-Protection', severity: 'LOW' },
+        ];
+        // In a real implementation, we would fetch and check headers
+        // For demo, we simulate missing headers
+        for (const header of requiredHeaders) {
+            const missing = Math.random() > 0.5; // Simulated check
+            if (missing) {
+                findings.push({
+                    id: `finding_${Date.now()}_${header.name}`,
+                    type: 'MISCONFIGURATION',
+                    severity: header.severity,
+                    title: `Missing Security Header: ${header.name}`,
+                    description: `The security header ${header.name} is not configured.`,
+                    remediation: `Add the ${header.name} header to your server configuration.`,
+                    cwe: 'CWE-693',
+                    qantumCanFix: true,
+                });
+            }
+        }
+        return findings;
+    }
+    async checkInfoDisclosure(domain) {
+        const findings = [];
+        // Check for common info disclosure issues
+        const disclosureChecks = [
+            { path: '/server-status', name: 'Server Status Exposed' },
+            { path: '/.git', name: 'Git Repository Exposed' },
+            { path: '/.env', name: 'Environment File Exposed' },
+            { path: '/phpinfo.php', name: 'PHP Info Exposed' },
+            { path: '/wp-config.php.bak', name: 'WordPress Config Backup' },
+        ];
+        // Simulated checks (in real implementation, would make requests)
+        for (const check of disclosureChecks) {
+            const exposed = Math.random() > 0.8; // 20% chance of being exposed (simulated)
+            if (exposed) {
+                findings.push({
+                    id: `finding_${Date.now()}_${check.path}`,
+                    type: 'SENSITIVE_DATA',
+                    severity: 'HIGH',
+                    title: check.name,
+                    description: `Sensitive information is exposed at ${check.path}.`,
+                    remediation: `Block access to ${check.path} in your web server configuration.`,
+                    cwe: 'CWE-200',
+                    qantumCanFix: true,
+                });
+            }
+        }
+        return findings;
+    }
+    async checkCommonVulns(domain) {
+        const findings = [];
+        // OWASP Top 10 checks (simulated)
+        const vulnChecks = [
+            { type: 'INJECTION', title: 'SQL Injection Potential', cwe: 'CWE-89', severity: 'CRITICAL' },
+            { type: 'XSS', title: 'Cross-Site Scripting', cwe: 'CWE-79', severity: 'HIGH' },
+            { type: 'BROKEN_AUTH', title: 'Weak Authentication', cwe: 'CWE-287', severity: 'HIGH' },
+            { type: 'BROKEN_ACCESS', title: 'IDOR Vulnerability', cwe: 'CWE-639', severity: 'HIGH' },
+        ];
+        for (const check of vulnChecks) {
+            const found = Math.random() > 0.85; // 15% chance (simulated)
+            if (found) {
+                findings.push({
+                    id: `finding_${Date.now()}_${check.type}`,
+                    type: check.type,
+                    severity: check.severity,
+                    title: check.title,
+                    description: `Potential ${check.title} vulnerability detected.`,
+                    remediation: `Review and fix the ${check.title} vulnerability.`,
+                    cwe: check.cwe,
+                    qantumCanFix: true,
+                });
+            }
+        }
+        return findings;
+    }
+    async performAIAnalysis(target) {
+        // Use Neural Inference for deep analysis
+        const analysis = await this.brain.analyzeVulnerability(`Security analysis of ${target.domain} (${target.type})`);
+        // Convert AI analysis to findings (simulated)
+        return [];
+    }
+    calculateScore(findings) {
+        let score = 100;
+        for (const finding of findings) {
+            switch (finding.severity) {
+                case 'CRITICAL':
+                    score -= 25;
+                    break;
+                case 'HIGH':
+                    score -= 15;
+                    break;
+                case 'MEDIUM':
+                    score -= 10;
+                    break;
+                case 'LOW':
+                    score -= 5;
+                    break;
+                case 'INFO':
+                    score -= 0;
+                    break;
+            }
+        }
+        return Math.max(0, score);
+    }
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CERTIFICATION
+    // ═══════════════════════════════════════════════════════════════════════════
+    /**
+     * Generate an Integrity Certificate from scan results
+     */
+    async certify(scanId) {
+        const scan = this.scans.find(s => s.id === scanId);
+        if (!scan) {
+            throw new Error(`Scan not found: ${scanId}`);
+        }
+        if (scan.status !== 'COMPLETED') {
+            throw new Error('Cannot certify incomplete scan');
+        }
+        console.log(`📜 [CERTIFY] Generating certificate for ${scan.target.domain}...`);
+        const certificate = await this.integrity.auditAndCertify(scan.target.domain, {
+            vulnerabilities: scan.findings.map(f => ({
+                description: f.title,
+                severity: f.severity,
+                fix: f.remediation,
+            })),
+        });
+        this.globalStats.certificatesIssued++;
+        this.emit('certificate:issued', certificate);
+        return certificate;
+    }
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PROPOSAL GENERATION
+    // ═══════════════════════════════════════════════════════════════════════════
+    /**
+     * Generate a remediation proposal from scan results
+     */
+    async generateProposal(scanId) {
+        const scan = this.scans.find(s => s.id === scanId);
+        if (!scan) {
+            throw new Error(`Scan not found: ${scanId}`);
+        }
+        console.log(`📝 [PROPOSAL] Generating remediation proposal for ${scan.target.domain}...`);
+        // Create a lead-like object from the scan
+        const leadData = {
+            id: scan.target.id,
+            companyName: scan.target.domain,
+            industry: 'Technology',
+            vulnerabilities: scan.findings.length,
+            severity: scan.findings.some(f => f.severity === 'CRITICAL') ? 'CRITICAL' : 'HIGH',
+            source: 'QAntum Global Audit',
+        };
+        const proposal = await this.proposalEngine.generate(leadData);
+        return proposal.markdown;
+    }
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STATUS
+    // ═══════════════════════════════════════════════════════════════════════════
+    getStatus() {
+        const activeScans = this.scans.filter(s => s.status === 'IN_PROGRESS').length;
+        return {
+            targets: this.targets.length,
+            activeScans,
+            stats: { ...this.globalStats },
+        };
+    }
+    getTargets() {
+        return [...this.targets];
+    }
+    getScans() {
+        return [...this.scans];
+    }
+    getScan(scanId) {
+        return this.scans.find(s => s.id === scanId);
+    }
+    getGlobalStats() {
+        return { ...this.globalStats };
+    }
+}
+exports.GlobalAudit = GlobalAudit;
+// ═══════════════════════════════════════════════════════════════════════════════
+// SINGLETON EXPORT
+// ═══════════════════════════════════════════════════════════════════════════════
+exports.globalAudit = GlobalAudit.getInstance();
+exports.default = GlobalAudit;
+//# sourceMappingURL=GlobalAudit.js.map

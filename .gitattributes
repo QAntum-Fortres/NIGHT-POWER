@@ -1,0 +1,43 @@
+# ==========================================
+# QANTUM LANGUAGE DETECTION RULES
+# ==========================================
+# Forces GitHub to properly recognize Rust as a primary language
+
+# Rust Core Engine
+*.rs linguist-language=Rust
+rust_core/** linguist-language=Rust
+Cargo.toml linguist-language=TOML
+Cargo.lock linguist-language=TOML
+
+# TypeScript/JavaScript
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript
+
+# Configuration & Data
+*.json linguist-language=JSON
+*.yaml linguist-language=YAML
+*.yml linguist-language=YAML
+*.toml linguist-language=TOML
+*.md linguist-language=Markdown
+
+# Exclude from stats (documentation/generated)
+docs/** linguist-documentation
+*.md linguist-documentation=false
+node_modules/** linguist-vendored
+dist/** linguist-generated
+build/** linguist-generated
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.node binary

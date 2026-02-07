@@ -1,0 +1,21 @@
+{
+  "domainName": "visual",
+  "layer": "REALITY",
+  "purpose": "Visual Testing Module - Screenshot comparison",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 777,
+  "healthScore": 90,
+  "integrityHash": "f25de4830eb59fe7",
+  "lastUpdated": "2025-12-30T20:50:15.885Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "visual is isolated - no dependencies or dependents",
+      "source": "visual"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "domainName": "fluent",
+  "layer": "CHEMISTRY",
+  "purpose": "fluent Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 784,
+  "healthScore": 100,
+  "integrityHash": "1b5a22cc6fc37218",
+  "lastUpdated": "2025-12-30T20:50:15.814Z",
+  "violations": []
+}

@@ -1,0 +1,16 @@
+{
+  "domainName": "future-practices",
+  "layer": "CHEMISTRY",
+  "purpose": "future-practices Module - General functionality",
+  "criticality": "MEDIUM",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 10,
+  "lineCount": 8085,
+  "healthScore": 100,
+  "integrityHash": "69f02c7d5eb6c6d6",
+  "lastUpdated": "2025-12-30T20:50:15.824Z",
+  "violations": []
+}

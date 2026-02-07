@@ -1,0 +1,21 @@
+{
+  "domainName": "queue",
+  "layer": "PHYSICS",
+  "purpose": "queue Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 871,
+  "healthScore": 90,
+  "integrityHash": "878758409434cb69",
+  "lastUpdated": "2025-12-30T20:50:15.861Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "queue is isolated - no dependencies or dependents",
+      "source": "queue"
+    }
+  ]
+}

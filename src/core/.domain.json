@@ -1,0 +1,17 @@
+{
+  "domainName": "core",
+  "layer": "CHEMISTRY",
+  "purpose": "QAntum Core Engine - Central nervous system",
+  "criticality": "SUPREME",
+  "dependencies": [
+    "api",
+    "types"
+  ],
+  "dependents": [],
+  "fileCount": 10,
+  "lineCount": 3684,
+  "healthScore": 100,
+  "integrityHash": "317a7b71f130cc1a",
+  "lastUpdated": "2025-12-30T20:50:15.806Z",
+  "violations": []
+}

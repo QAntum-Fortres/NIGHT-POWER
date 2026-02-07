@@ -1,0 +1,21 @@
+{
+  "domainName": "security",
+  "layer": "BIOLOGY",
+  "purpose": "FATALITY Defense System - Predatory protection",
+  "criticality": "SUPREME",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 7,
+  "lineCount": 5601,
+  "healthScore": 90,
+  "integrityHash": "ec7fa35df7333f8e",
+  "lastUpdated": "2025-12-30T20:50:15.873Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "security is isolated - no dependencies or dependents",
+      "source": "security"
+    }
+  ]
+}

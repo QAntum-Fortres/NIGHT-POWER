@@ -1,0 +1,24 @@
+{
+  "domainName": "swarm",
+  "layer": "PHYSICS",
+  "purpose": "Parallel Execution Engine - Distributed power",
+  "criticality": "HIGH",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 2156,
+  "healthScore": 80,
+  "integrityHash": "92b75529317be5bd",
+  "lastUpdated": "2025-12-30T20:50:15.880Z",
+  "violations": [
+    {
+      "type": "LAYER_VIOLATION",
+      "severity": "ERROR",
+      "message": "swarm (PHYSICS) depends on api (CHEMISTRY) - violates causal hierarchy",
+      "source": "swarm",
+      "target": "api"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+flowchart TB
+
+    %% Modules
+    accessibility["accessibility<br/>2 files"]
+    agents["agents<br/>7 files"]
+    ai["ai<br/>4 files"]
+    api["api<br/>3 files"]
+    asc["asc<br/>1 files"]
+    bastion["bastion<br/>10 files"]
+    biology["biology<br/>14 files"]
+    chaos["chaos<br/>8 files"]
+    chemistry["chemistry<br/>5 files"]
+    chronos["chronos<br/>6 files"]
+    cognition["cognition<br/>15 files"]
+    config["config<br/>3 files"]
+    core["core<br/>21 files"]
+    dashboard["dashboard<br/>3 files"]
+    data["data<br/>4 files"]
+    distributed["distributed<br/>4 files"]
+    docs["docs<br/>1 files"]
+    enterprise["enterprise<br/>9 files"]
+    events["events<br/>3 files"]
+    extensibility["extensibility<br/>3 files"]
+    fortress["fortress<br/>9 files"]
+    ghost["ghost<br/>8 files"]
+    global_nexus["global-nexus<br/>1 files"]
+    guardians["guardians<br/>4 files"]
+    healing["healing<br/>3 files"]
+    ide["ide<br/>7 files"]
+    index_ts["index.ts<br/>1 files"]
+    integration["integration<br/>3 files"]
+    intelligence["intelligence<br/>28 files"]
+    licensing["licensing<br/>1 files"]
+    local["local<br/>3 files"]
+    market_reaper_ts["market-reaper.ts<br/>1 files"]
+    math["math<br/>1 files"]
+    multimodal["multimodal<br/>179 files"]
+    neural["neural<br/>2 files"]
+    neural_hud_ts["neural-hud.ts<br/>1 files"]
+    omega["omega<br/>39 files"]
+    oracle["oracle<br/>1 files"]
+    performance["performance<br/>6 files"]
+    persona["persona<br/>4 files"]
+    physics["physics<br/>6 files"]
+    plugins["plugins<br/>2 files"]
+    reality["reality<br/>24 files"]
+    reporter["reporter<br/>4 files"]
+    saas["saas<br/>4 files"]
+    sales["sales<br/>1 files"]
+    scripts["scripts<br/>1 files"]
+    security["security<br/>12 files"]
+    segc["segc<br/>8 files"]
+    sovereign_market["sovereign-market<br/>1 files"]
+    storage["storage<br/>4 files"]
+    swarm["swarm<br/>20 files"]
+    synthesis["synthesis<br/>5 files"]
+    telemetry["telemetry<br/>2 files"]
+    types["types<br/>5 files"]
+    ux["ux<br/>2 files"]
+    validation["validation<br/>4 files"]
+    visual["visual<br/>3 files"]
+
+    %% Dependencies
+    biology --> physics
+    biology --> cognition
+    biology --> chemistry
+    cognition --> physics
+    cognition --> scripts
+    core --> intelligence
+    core --> omega
+    dashboard --> physics
+    dashboard --> swarm
+    enterprise --> multimodal
+    enterprise --> telemetry
+    enterprise --> omega
+    enterprise --> intelligence
+    enterprise --> core
+    global_nexus --> swarm
+    global_nexus --> reality
+    global_nexus --> security
+    global_nexus --> docs
+    ide --> fortress
+    ide --> intelligence
+    ide --> omega
+    index_ts --> asc
+    index_ts --> swarm
+    index_ts --> segc
+    index_ts --> bastion
+    intelligence --> physics
+    intelligence --> biology
+    intelligence --> omega
+    multimodal --> physics
+    multimodal --> swarm
+    multimodal --> synthesis
+    multimodal --> types
+    multimodal --> core
+    omega --> physics
+    omega --> cognition
+    omega --> intelligence
+    omega --> biology
+    omega --> fortress
+    reality --> math
+    reality --> chronos
+    reality --> physics
+    reality --> biology
+    reality --> intelligence
+    sovereign_market --> biology
+    sovereign_market --> reality
+    swarm --> physics
+
+    %% Styles
+    classDef cycle fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px
+    classDef physics fill:#74c0fc,stroke:#1971c2
+    classDef biology fill:#69db7c,stroke:#2f9e44
+    classDef cognition fill:#ffd43b,stroke:#f59f00
+    classDef chemistry fill:#da77f2,stroke:#9c36b5
+    classDef quantum fill:#ff922b,stroke:#e8590c

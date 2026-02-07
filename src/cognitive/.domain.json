@@ -1,0 +1,16 @@
+{
+  "domainName": "cognitive",
+  "layer": "BIOLOGY",
+  "purpose": "AI Intelligence Core - Neural mapping",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 5,
+  "lineCount": 4202,
+  "healthScore": 100,
+  "integrityHash": "b0ff9ca23cbe45d9",
+  "lastUpdated": "2025-12-30T20:50:15.800Z",
+  "violations": []
+}

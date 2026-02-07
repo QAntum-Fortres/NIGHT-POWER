@@ -1,0 +1,16 @@
+{
+  "domainName": "scheduler",
+  "layer": "CHEMISTRY",
+  "purpose": "scheduler Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 576,
+  "healthScore": 100,
+  "integrityHash": "18d3d5f7aead8c28",
+  "lastUpdated": "2025-12-30T20:50:15.866Z",
+  "violations": []
+}

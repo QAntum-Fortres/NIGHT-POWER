@@ -1,0 +1,16 @@
+{
+  "domainName": "session",
+  "layer": "CHEMISTRY",
+  "purpose": "session Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 987,
+  "healthScore": 100,
+  "integrityHash": "ff7a60c3c600eb01",
+  "lastUpdated": "2025-12-30T20:50:15.874Z",
+  "violations": []
+}

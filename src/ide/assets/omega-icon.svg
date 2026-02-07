@@ -1,0 +1,29 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="128" height="128" rx="24" fill="url(#gradient)"/>
+  
+  <!-- Omega Symbol -->
+  <path d="M64 24C42.46 24 25 41.46 25 63C25 74.17 29.73 84.24 37.5 91.5V104H54V92.5C57.18 93.47 60.52 94 64 94C67.48 94 70.82 93.47 74 92.5V104H90.5V91.5C98.27 84.24 103 74.17 103 63C103 41.46 85.54 24 64 24ZM64 84C48.54 84 36 71.46 36 56C36 40.54 48.54 28 64 28C79.46 28 92 40.54 92 56C92 71.46 79.46 84 64 84Z" fill="white"/>
+  
+  <!-- Inner Glow -->
+  <circle cx="64" cy="56" r="20" fill="url(#innerGlow)" opacity="0.8"/>
+  
+  <!-- Eye -->
+  <circle cx="64" cy="56" r="8" fill="#a855f7"/>
+  <circle cx="68" cy="52" r="3" fill="white" opacity="0.8"/>
+  
+  <!-- Lightning Bolts -->
+  <path d="M32 40L38 52L32 52L40 68L36 54L42 54L32 40Z" fill="#fbbf24" opacity="0.9"/>
+  <path d="M96 40L90 52L96 52L88 68L92 54L86 54L96 40Z" fill="#fbbf24" opacity="0.9"/>
+  
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+    <radialGradient id="innerGlow" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </radialGradient>
+  </defs>
+</svg>

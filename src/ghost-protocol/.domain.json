@@ -1,0 +1,16 @@
+{
+  "domainName": "ghost-protocol",
+  "layer": "CHEMISTRY",
+  "purpose": "ghost-protocol Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 1,
+  "lineCount": 626,
+  "healthScore": 100,
+  "integrityHash": "4c5c572a1296fe81",
+  "lastUpdated": "2025-12-30T20:50:15.832Z",
+  "violations": []
+}

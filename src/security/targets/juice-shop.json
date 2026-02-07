@@ -1,0 +1,112 @@
+{
+  "name": "OWASP Juice Shop",
+  "description": "Intentionally vulnerable web application for security training",
+  "url": "https://juice-shop.herokuapp.com",
+  "alternativeUrls": [
+    "http://localhost:3000",
+    "https://juice-shop.h erokuapp.com"
+  ],
+  "mode": "aggressive",
+  "isTrainingTarget": true,
+  "stealth": false,
+  "rateLimit": {
+    "requestsPerSecond": 10,
+    "burstLimit": 50
+  },
+  "knownVulnerabilities": {
+    "sqlInjection": {
+      "enabled": true,
+      "endpoints": [
+        "/rest/products/search?q=",
+        "/rest/user/login"
+      ],
+      "payloads": [
+        "' OR 1=1--",
+        "' OR '1'='1",
+        "admin'--",
+        "1; DROP TABLE users--"
+      ]
+    },
+    "xss": {
+      "enabled": true,
+      "endpoints": [
+        "/api/Feedbacks",
+        "/#/search?q=",
+        "/#/track-result?id="
+      ],
+      "payloads": [
+        "<script>alert('XSS')</script>",
+        "<img src=x onerror=alert('XSS')>",
+        "<iframe src=\"javascript:alert('XSS')\">"
+      ]
+    },
+    "idor": {
+      "enabled": true,
+      "endpoints": [
+        "/api/BasketItems/{id}",
+        "/api/Addresss/{id}",
+        "/api/Cards/{id}",
+        "/rest/basket/{id}",
+        "/api/Feedbacks/{id}"
+      ],
+      "testUserIds": [1, 2, 3, 4, 5]
+    },
+    "authBypass": {
+      "enabled": true,
+      "adminEndpoints": [
+        "/administration",
+        "/#/administration",
+        "/api/Users",
+        "/api/Quantitys"
+      ]
+    },
+    "sensitiveDataExposure": {
+      "enabled": true,
+      "checkEndpoints": [
+        "/ftp",
+        "/api/Complaints",
+        "/api/SecurityQuestions",
+        "/support/logs"
+      ]
+    },
+    "brokenAccessControl": {
+      "enabled": true,
+      "endpoints": [
+        "/api/Users/{id}",
+        "/rest/user/change-password",
+        "/api/Deliverys/{id}"
+      ]
+    }
+  },
+  "authentication": {
+    "loginEndpoint": "/rest/user/login",
+    "registerEndpoint": "/api/Users",
+    "testAccounts": [
+      {
+        "email": "admin@juice-sh.op",
+        "password": "admin123",
+        "role": "admin"
+      },
+      {
+        "email": "jim@juice-sh.op", 
+        "password": "ncc-1701",
+        "role": "user"
+      },
+      {
+        "email": "bender@juice-sh.op",
+        "password": "OhG0dPlease1teleportMe!",
+        "role": "user"
+      }
+    ]
+  },
+  "expectedFindings": {
+    "critical": ["SQL Injection", "Admin Access", "Sensitive Data Exposure"],
+    "high": ["XSS", "IDOR", "Broken Authentication"],
+    "medium": ["CSRF", "Security Misconfiguration"],
+    "low": ["Information Disclosure"]
+  },
+  "scoring": {
+    "challengeBoard": "/#/score-board",
+    "totalChallenges": 100
+  }
+}

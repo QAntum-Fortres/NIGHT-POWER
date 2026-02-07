@@ -1,0 +1,21 @@
+{
+  "domainName": "mobile",
+  "layer": "CHEMISTRY",
+  "purpose": "mobile Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 715,
+  "healthScore": 90,
+  "integrityHash": "b56dde52d2772b07",
+  "lastUpdated": "2025-12-30T20:50:15.844Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "mobile is isolated - no dependencies or dependents",
+      "source": "mobile"
+    }
+  ]
+}

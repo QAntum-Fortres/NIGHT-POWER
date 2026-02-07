@@ -1,0 +1,25 @@
+{
+  "name": "crypto-rust",
+  "language": "rust",
+  "path": "./target/release/crypto_rust",
+  "version": "1.0.0",
+  "capabilities": [
+    "encrypt",
+    "decrypt",
+    "blake3_hash",
+    "hash_password",
+    "verify_password",
+    "sign",
+    "verify_signature"
+  ],
+  "fallback": "./fallback/crypto-fallback.ts",
+  "description": "High-performance cryptographic operations. Uses Rust when compiled, TypeScript fallback otherwise.",
+  "buildInstructions": {
+    "rust": {
+      "windows": "Install Visual Studio C++ Build Tools, then run: cargo build --release",
+      "linux": "apt-get install build-essential, then run: cargo build --release",
+      "macos": "xcode-select --install, then run: cargo build --release"
+    },
+    "fallback": "No build required - TypeScript fallback works out of the box"
+  }
+}

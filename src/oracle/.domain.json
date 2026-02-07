@@ -1,0 +1,16 @@
+{
+  "domainName": "oracle",
+  "layer": "BIOLOGY",
+  "purpose": "Autonomous Discovery & Analysis - Site intelligence",
+  "criticality": "HIGH",
+  "dependencies": [
+    "ghost"
+  ],
+  "dependents": [],
+  "fileCount": 5,
+  "lineCount": 4830,
+  "healthScore": 100,
+  "integrityHash": "cba831bf08c40fe1",
+  "lastUpdated": "2025-12-30T20:50:15.850Z",
+  "violations": []
+}

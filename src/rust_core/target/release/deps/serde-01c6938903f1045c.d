@@ -1,0 +1,14 @@
+C:\Users\papic\Desktop\SOVEREIGN-ENGINE\rust_core\target\release\deps\serde-01c6938903f1045c.d: C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\papic\Desktop\SOVEREIGN-ENGINE\rust_core\target\release\build\serde-0904142beeccba7d\out/private.rs
+
+C:\Users\papic\Desktop\SOVEREIGN-ENGINE\rust_core\target\release\deps\libserde-01c6938903f1045c.rlib: C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\papic\Desktop\SOVEREIGN-ENGINE\rust_core\target\release\build\serde-0904142beeccba7d\out/private.rs
+
+C:\Users\papic\Desktop\SOVEREIGN-ENGINE\rust_core\target\release\deps\libserde-01c6938903f1045c.rmeta: C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\papic\Desktop\SOVEREIGN-ENGINE\rust_core\target\release\build\serde-0904142beeccba7d\out/private.rs
+
+C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs:
+C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs:
+C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs:
+C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs:
+C:\Users\papic\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs:
+C:\Users\papic\Desktop\SOVEREIGN-ENGINE\rust_core\target\release\build\serde-0904142beeccba7d\out/private.rs:
+
+# env-dep:OUT_DIR=C:\\Users\\papic\\Desktop\\SOVEREIGN-ENGINE\\rust_core\\target\\release\\build\\serde-0904142beeccba7d\\out

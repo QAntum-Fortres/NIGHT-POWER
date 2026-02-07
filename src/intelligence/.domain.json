@@ -1,0 +1,21 @@
+{
+  "domainName": "intelligence",
+  "layer": "BIOLOGY",
+  "purpose": "Neural Backpack & Context - Second brain",
+  "criticality": "SUPREME",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 994,
+  "healthScore": 90,
+  "integrityHash": "20703c831bd43393",
+  "lastUpdated": "2025-12-30T20:50:15.839Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "intelligence is isolated - no dependencies or dependents",
+      "source": "intelligence"
+    }
+  ]
+}

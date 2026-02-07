@@ -1,0 +1,21 @@
+{
+  "domainName": "verification",
+  "layer": "CHEMISTRY",
+  "purpose": "verification Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 1139,
+  "healthScore": 90,
+  "integrityHash": "1a47a68eb4db50f4",
+  "lastUpdated": "2025-12-30T20:50:15.884Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "verification is isolated - no dependencies or dependents",
+      "source": "verification"
+    }
+  ]
+}

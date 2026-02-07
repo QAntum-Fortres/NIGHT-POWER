@@ -1,0 +1,107 @@
+# Ignore everything
+*
+
+# Except these files
+!README.md
+!LICENSE
+!package.json
+!package-lock.json
+!tsconfig.json
+!src/
+!src/**
+!.npmignore
+!.gitignore
+
+# Include app directory (user auth pages)
+!app/
+!app/**
+
+# Include examples
+!examples/
+!examples/**
+
+# Include docs
+!docs/
+!docs/**
+
+# Include GitHub config
+!.github/
+!.github/**
+
+# Include landing page
+!index.html
+
+# Include documentation
+!SECURITY.md
+!CONTRIBUTING.md
+!CHANGELOG.md
+!.eslintrc.json
+!test-all.js
+
+# Include tests
+!tests/
+!tests/**
+
+# Include security modules
+!security/
+!security/**
+
+# Include swarm modules
+!swarm/
+!swarm/**
+
+# Include polyglot modules
+!polyglot-modules/
+!polyglot-modules/**
+
+# Exclude build artifacts in polyglot modules
+polyglot-modules/**/target/
+polyglot-modules/**/node_modules/
+polyglot-modules/**/*.so
+polyglot-modules/**/*.dylib
+polyglot-modules/**/*.dll
+
+# Include new documentation
+!POLYGLOT-ZERO-DOWNTIME.md
+!ENTERPRISE-TRANSFORMATION-SUMMARY.md
+!QUICK-REFERENCE.md
+!DOCUMENTATION-50-STEPS.md
+!VISUAL-MAP-50-STEPS.md
+!BRANCHING-STRATEGY.md
+!IMPLEMENTATION-SUMMARY.md
+!PORTFOLIO-SHOWCASE.md
+
+# Exclude logs
+logs/
+*.log
+
+# Include scripts directory
+!scripts/
+!scripts/**
+
+# Exclude analysis output (temporary files)
+analysis-output/
+*.tmp
+*.temp
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build artifacts
+dist/
+build/
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+QAntum v23.3.0 - Fullstack Dashboard with All Features
+© 2025 Димитър Продромов (Dimitar Prodromov). All Rights Reserved.
+═══════════════════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAntum Dashboard - Test. Secure. Dominate.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1d4ed8;
+            --purple: #8b5cf6;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #06b6d4;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .app-container { display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .logo-icon { font-size: 32px; }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-section { margin-bottom: 24px; }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover { background: rgba(37, 99, 235, 0.1); color: var(--text-primary); }
+        .nav-item.active { background: var(--primary); color: white; }
+        .nav-item-icon { font-size: 20px; width: 24px; text-align: center; }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--error);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .user-card {
+            margin-top: auto;
+            padding: 16px;
+            background: var(--bg-input);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-info { flex: 1; }
+        .user-name { font-size: 14px; font-weight: 600; }
+        .user-plan { font-size: 12px; color: var(--success); }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 32px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title { font-size: 28px; font-weight: 700; }
+        .page-subtitle { color: var(--text-secondary); margin-top: 4px; }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4); }
+
+        .btn-secondary { background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-ghost { background: rgba(139, 92, 246, 0.15); color: var(--purple); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--error); color: white; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card.blue::before { background: var(--primary); }
+        .stat-card.green::before { background: var(--success); }
+        .stat-card.purple::before { background: var(--purple); }
+        .stat-card.orange::before { background: var(--warning); }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card.blue .stat-icon { background: rgba(37, 99, 235, 0.2); }
+        .stat-card.green .stat-icon { background: rgba(34, 197, 94, 0.2); }
+        .stat-card.purple .stat-icon { background: rgba(139, 92, 246, 0.2); }
+        .stat-card.orange .stat-icon { background: rgba(245, 158, 11, 0.2); }
+
+        .stat-value { font-size: 32px; font-weight: 700; }
+        .stat-label { color: var(--text-secondary); font-size: 14px; }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title { font-size: 18px; font-weight: 600; }
+
+        /* Feature Sections */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .feature-icon { font-size: 48px; margin-bottom: 16px; }
+        .feature-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .feature-desc { color: var(--text-secondary); font-size: 14px; line-height: 1.5; }
+
+        /* Test Runner */
+        .test-runner {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .input-group { margin-bottom: 20px; }
+        .input-label { font-size: 14px; font-weight: 500; margin-bottom: 8px; display: block; }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .input-field:focus { outline: none; border-color: var(--primary); }
+
+        .options-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .option-chip {
+            padding: 8px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-chip:hover, .option-chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: #0d1117;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-line { padding: 4px 0; display: flex; align-items: center; gap: 8px; }
+        .result-line.success { color: var(--success); }
+        .result-line.error { color: var(--error); }
+        .result-line.warning { color: var(--warning); }
+        .result-line.info { color: var(--info); }
+
+        /* Activity Feed */
+        .activity-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-input);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .activity-item:hover { transform: translateX(4px); }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .activity-icon.success { background: rgba(34, 197, 94, 0.2); }
+        .activity-icon.error { background: rgba(239, 68, 68, 0.2); }
+        .activity-icon.info { background: rgba(6, 182, 212, 0.2); }
+
+        .activity-content { flex: 1; }
+        .activity-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+        .activity-time { font-size: 12px; color: var(--text-muted); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.show .modal { transform: scale(1); }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title { font-size: 20px; font-weight: 600; }
+        .modal-close { background: none; border: none; color: var(--text-secondary); font-size: 24px; cursor: pointer; }
+        .modal-body { padding: 24px; }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--error); }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        .status-dot.connected { background: var(--success); }
+        .status-dot.disconnected { background: var(--error); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Page Sections */
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); position: fixed; z-index: 100; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Connection Status -->
+    <div class="connection-status">
+        <span class="status-dot" id="ws-status"></span>
+        <span id="ws-status-text">Connecting...</span>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">QAntum</span>
+            </div>
+
+            <nav>
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a class="nav-item active" data-page="dashboard">
+                        <span class="nav-item-icon">📊</span>
+                        Dashboard
+                    </a>
+                    <a class="nav-item" data-page="tests">
+                        <span class="nav-item-icon">🧪</span>
+                        Test Runner
+                    </a>
+                    <a class="nav-item" data-page="security">
+                        <span class="nav-item-icon">🛡️</span>
+                        Security Scanner
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">AI Features</div>
+                    <a class="nav-item" data-page="ghost">
+                        <span class="nav-item-icon">👻</span>
+                        Ghost Mode
+                    </a>
+                    <a class="nav-item" data-page="ai">
+                        <span class="nav-item-icon">🤖</span>
+                        AI Self-Healing
+                    </a>
+                    <a class="nav-item" data-page="generate">
+                        <span class="nav-item-icon">✨</span>
+                        Test Generator
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Reports</div>
+                    <a class="nav-item" data-page="reports">
+                        <span class="nav-item-icon">📈</span>
+                        Analytics
+                    </a>
+                    <a class="nav-item" data-page="history">
+                        <span class="nav-item-icon">📜</span>
+                        History
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Account</div>
+                    <a class="nav-item" data-page="settings">
+                        <span class="nav-item-icon">⚙️</span>
+                        Settings
+                    </a>
+                    <a class="nav-item" onclick="logout()">
+                        <span class="nav-item-icon">🚪</span>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+
+            <div class="user-card">
+                <div class="user-avatar" id="user-avatar">QA</div>
+                <div class="user-info">
+                    <div class="user-name" id="user-name">User</div>
+                    <div class="user-plan" id="user-plan">Free Plan</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <section class="page-section active" id="page-dashboard">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">Dashboard</h1>
+                        <p class="page-subtitle">Welcome back! Here's your testing overview.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="showPage('tests')">
+                        <span>🚀</span> Run New Test
+                    </button>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-icon">🧪</div>
+                        <div class="stat-value" id="stat-tests">0</div>
+                        <div class="stat-label">Tests Run</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-value" id="stat-passed">0%</div>
+                        <div class="stat-label">Pass Rate</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon">🛡️</div>
+                        <div class="stat-value" id="stat-scans">0</div>
+                        <div class="stat-label">Security Scans</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-value" id="stat-vulns">0</div>
+                        <div class="stat-label">Vulnerabilities</div>
+                    </div>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="showPage('tests')">
+                        <div class="feature-icon">🧪</div>
+                        <div class="feature-title">Test Runner</div>
+                        <div class="feature-desc">Run automated tests with AI self-healing and detailed reports.</div>
+                    </div>
+                    <div class="feature-card" onclick="showPage('security')">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-title">Security Scanner</div>
+                        <div class="feature-desc">Scan for XSS, SQL injection, CSRF and other vulnerabilities.</div>
+                    </div>
+                    <div class="feature-card" onclick="showPage('ghost')">
+                        <div class="feature-icon">👻</div>
+                        <div class="feature-title">Ghost Mode</div>
+                        <div class="feature-desc">Undetectable browser automation with fingerprint spoofing.</div>
+                    </div>
+                    <div class="feature-card" onclick="showPage('ai')">
+                        <div class="feature-icon">🤖</div>
+                        <div class="feature-title">AI Self-Healing</div>
+                        <div class="feature-desc">Automatically fix broken selectors using AI analysis.</div>
+                    </div>
+                    <div class="feature-card" onclick="showPage('generate')">
+                        <div class="feature-icon">✨</div>
+                        <div class="feature-title">Test Generator</div>
+                        <div class="feature-desc">Generate tests from natural language descriptions.</div>
+                    </div>
+                    <div class="feature-card" onclick="showPage('reports')">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Analytics</div>
+                        <div class="feature-desc">View detailed reports and performance metrics.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Activity</h3>
+                    </div>
+                    <div id="activity-feed">
+                        <div class="activity-item">
+                            <div class="activity-icon info">ℹ️</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Welcome to QAntum! Run your first test to get started.</div>
+                                <div class="activity-time">Just now</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Test Runner Page -->
+            <section class="page-section" id="page-tests">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">🧪 Test Runner</h1>
+                        <p class="page-subtitle">Run automated tests with AI-powered self-healing.</p>
+                    </div>
+                </header>
+
+                <div class="test-runner">
+                    <div class="input-group">
+                        <label class="input-label">Target URL</label>
+                        <input type="url" class="input-field" id="test-url" placeholder="https://example.com" value="https://example.com">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Test Type</label>
+                        <div class="options-row">
+                            <span class="option-chip active" data-type="functional">Functional</span>
+                            <span class="option-chip" data-type="performance">Performance</span>
+                            <span class="option-chip" data-type="accessibility">Accessibility</span>
+                            <span class="option-chip" data-type="seo">SEO</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Options</label>
+                        <div class="options-row">
+                            <span class="option-chip active" data-option="screenshots">📸 Screenshots</span>
+                            <span class="option-chip active" data-option="ai-healing">🤖 AI Healing</span>
+                            <span class="option-chip" data-option="video">🎥 Video</span>
+                            <span class="option-chip" data-option="parallel">⚡ Parallel</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="run-test-btn" onclick="runTest()" style="width: 100%; justify-content: center;">
+                        <span>🚀</span> Run Test
+                    </button>
+
+                    <div class="results-panel" id="test-results" style="margin-top: 20px; display: none;">
+                        <div class="result-line info">Waiting for test to start...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security Scanner Page -->
+            <section class="page-section" id="page-security">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">🛡️ Security Scanner</h1>
+                        <p class="page-subtitle">Scan for vulnerabilities and security issues.</p>
+                    </div>
+                </header>
+
+                <div class="test-runner">
+                    <div class="input-group">
+                        <label class="input-label">Target URL</label>
+                        <input type="url" class="input-field" id="scan-url" placeholder="https://example.com" value="https://example.com">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Scan Types</label>
+                        <div class="options-row">
+                            <span class="option-chip active" data-scan="xss">🔴 XSS</span>
+                            <span class="option-chip active" data-scan="sqli">🔵 SQL Injection</span>
+                            <span class="option-chip active" data-scan="csrf">🟡 CSRF</span>
+                            <span class="option-chip active" data-scan="headers">🟢 Headers</span>
+                            <span class="option-chip" data-scan="ssl">🔒 SSL/TLS</span>
+                            <span class="option-chip" data-scan="ports">📡 Port Scan</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-danger" id="run-scan-btn" onclick="runSecurityScan()" style="width: 100%; justify-content: center;">
+                        <span>🛡️</span> Start Security Scan
+                    </button>
+
+                    <div class="results-panel" id="scan-results" style="margin-top: 20px; display: none;">
+                        <div class="result-line info">Waiting for scan to start...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ghost Mode Page -->
+            <section class="page-section" id="page-ghost">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">👻 Ghost Mode</h1>
+                        <p class="page-subtitle">Undetectable browser automation with fingerprint spoofing.</p>
+                    </div>
+                </header>
+
+                <div class="test-runner">
+                    <div class="input-group">
+                        <label class="input-label">Target URL</label>
+                        <input type="url" class="input-field" id="ghost-url" placeholder="https://protected-site.com">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Stealth Options</label>
+                        <div class="options-row">
+                            <span class="option-chip active" data-ghost="fingerprint">🎭 Random Fingerprint</span>
+                            <span class="option-chip active" data-ghost="webrtc">🔇 Disable WebRTC</span>
+                            <span class="option-chip active" data-ghost="timezone">🌍 Random Timezone</span>
+                            <span class="option-chip" data-ghost="proxy">🔀 Use Proxy</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-ghost" id="start-ghost-btn" onclick="startGhostSession()" style="flex: 1; justify-content: center;">
+                            <span>👻</span> Start Ghost Session
+                        </button>
+                        <button class="btn btn-secondary" id="stop-ghost-btn" onclick="stopGhostSession()" style="flex: 1; justify-content: center;" disabled>
+                            <span>🛑</span> Stop Session
+                        </button>
+                    </div>
+
+                    <div class="results-panel" id="ghost-results" style="margin-top: 20px; display: none;">
+                        <div class="result-line info">Ghost session inactive</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Self-Healing Page -->
+            <section class="page-section" id="page-ai">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">🤖 AI Self-Healing</h1>
+                        <p class="page-subtitle">Automatically fix broken selectors using AI analysis.</p>
+                    </div>
+                </header>
+
+                <div class="test-runner">
+                    <div class="input-group">
+                        <label class="input-label">Broken Selector</label>
+                        <input type="text" class="input-field" id="broken-selector" placeholder="#old-button-id" value="#submit-btn-old">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Page Context (HTML snippet)</label>
+                        <textarea class="input-field" id="page-context" rows="5" placeholder="<button class='btn'>Submit</button>">&lt;form&gt;
+  &lt;button class="btn-primary submit" data-action="submit"&gt;Submit Form&lt;/button&gt;
+&lt;/form&gt;</textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="healSelector()" style="width: 100%; justify-content: center;">
+                        <span>🔧</span> Heal Selector
+                    </button>
+
+                    <div class="results-panel" id="heal-results" style="margin-top: 20px; display: none;">
+                        <div class="result-line info">Enter a broken selector to heal</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Test Generator Page -->
+            <section class="page-section" id="page-generate">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">✨ Test Generator</h1>
+                        <p class="page-subtitle">Generate tests from natural language descriptions.</p>
+                    </div>
+                </header>
+
+                <div class="test-runner">
+                    <div class="input-group">
+                        <label class="input-label">Target URL</label>
+                        <input type="url" class="input-field" id="gen-url" placeholder="https://example.com" value="https://example.com/login">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Test Description (Natural Language)</label>
+                        <textarea class="input-field" id="test-description" rows="4" placeholder="Describe what you want to test...">User should be able to login with valid credentials and see the dashboard</textarea>
+                    </div>
+
+                    <button class="btn btn-success" onclick="generateTest()" style="width: 100%; justify-content: center;">
+                        <span>✨</span> Generate Test
+                    </button>
+
+                    <div class="results-panel" id="gen-results" style="margin-top: 20px; display: none;">
+                        <div class="result-line info">Enter a description to generate test</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Page -->
+            <section class="page-section" id="page-settings">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">⚙️ Settings</h1>
+                        <p class="page-subtitle">Manage your account and preferences.</p>
+                    </div>
+                </header>
+
+                <div class="card">
+                    <h3 class="card-title" style="margin-bottom: 20px;">Profile</h3>
+                    <div class="input-group">
+                        <label class="input-label">Name</label>
+                        <input type="text" class="input-field" id="settings-name" placeholder="Your Name">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Email</label>
+                        <input type="email" class="input-field" id="settings-email" placeholder="your@email.com">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title" style="margin-bottom: 20px;">License</h3>
+                    <div class="input-group">
+                        <label class="input-label">License Key</label>
+                        <input type="text" class="input-field" id="license-key" placeholder="QA-XXXX-XXXX-XXXX" readonly>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <span id="license-status" style="color: var(--success);">✅ Active</span>
+                        <button class="btn btn-secondary" onclick="copyLicense()">📋 Copy</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Page -->
+            <section class="page-section" id="page-reports">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">📊 Analytics</h1>
+                        <p class="page-subtitle">View detailed reports and performance metrics.</p>
+                    </div>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Avg Pass Rate</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-value">2.3s</div>
+                        <div class="stat-label">Avg Test Time</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon">🔧</div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Auto-Healed</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value">47h</div>
+                        <div class="stat-label">Time Saved</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Page -->
+            <section class="page-section" id="page-history">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">📜 History</h1>
+                        <p class="page-subtitle">View all past tests and scans.</p>
+                    </div>
+                </header>
+
+                <div class="card">
+                    <div id="history-list">
+                        <p style="color: var(--text-secondary);">No history yet. Run your first test!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toast-icon">✓</span>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // CONFIG
+        // ═══════════════════════════════════════════════════════════════
+        const API_BASE = 'http://localhost:3847/api';
+        let ws = null;
+        let token = localStorage.getItem('token');
+        let currentGhostSession = null;
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+            connectWebSocket();
+            setupNavigation();
+            setupOptionChips();
+            loadDashboardStats();
+        });
+
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.name) {
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-avatar').textContent = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.getElementById('settings-name').value = user.name;
+            }
+            if (user.email) {
+                document.getElementById('settings-email').value = user.email;
+            }
+            if (user.license) {
+                document.getElementById('license-key').value = user.license;
+            }
+            if (user.plan) {
+                document.getElementById('user-plan').textContent = user.plan === 'pro' ? 'Pro Plan' : 'Free Plan';
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // WEBSOCKET
+        // ═══════════════════════════════════════════════════════════════
+        function connectWebSocket() {
+            ws = new WebSocket('ws://localhost:3847');
+            
+            ws.onopen = () => {
+                document.getElementById('ws-status').className = 'status-dot connected';
+                document.getElementById('ws-status-text').textContent = 'Connected';
+            };
+            
+            ws.onclose = () => {
+                document.getElementById('ws-status').className = 'status-dot disconnected';
+                document.getElementById('ws-status-text').textContent = 'Disconnected';
+                setTimeout(connectWebSocket, 3000);
+            };
+            
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleWebSocketMessage(data);
+            };
+        }
+
+        function handleWebSocketMessage(data) {
+            switch (data.type) {
+                case 'TEST_STARTED':
+                    addResultLine('test-results', `🚀 Test started for ${data.url}`, 'info');
+                    break;
+                case 'TEST_COMPLETED':
+                    const status = data.results.passed ? 'success' : 'error';
+                    addResultLine('test-results', `${data.results.passed ? '✅' : '❌'} Test ${data.results.passed ? 'PASSED' : 'FAILED'} in ${data.results.duration}ms`, status);
+                    data.results.steps.forEach(step => {
+                        addResultLine('test-results', `  → ${step.name}: ${step.status}`, step.status === 'passed' ? 'success' : 'error');
+                    });
+                    loadDashboardStats();
+                    break;
+                case 'SCAN_STARTED':
+                    addResultLine('scan-results', `🔍 Security scan started for ${data.url}`, 'info');
+                    break;
+                case 'SCAN_COMPLETED':
+                    addResultLine('scan-results', `✅ Scan completed! Score: ${data.results.score}/100`, data.results.score > 80 ? 'success' : 'warning');
+                    data.results.vulnerabilities.forEach(v => {
+                        addResultLine('scan-results', `  ⚠️ ${v.type} (${v.severity}): ${v.description}`, 'error');
+                    });
+                    loadDashboardStats();
+                    break;
+                case 'GHOST_SESSION_STARTED':
+                    addResultLine('ghost-results', `👻 Ghost session active: ${data.sessionId}`, 'success');
+                    break;
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // NAVIGATION
+        // ═══════════════════════════════════════════════════════════════
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+                item.addEventListener('click', () => {
+                    const page = item.dataset.page;
+                    showPage(page);
+                });
+            });
+        }
+
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            // Show selected page
+            document.getElementById(`page-${pageName}`).classList.add('active');
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="${pageName}"]`)?.classList.add('active');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // OPTION CHIPS
+        // ═══════════════════════════════════════════════════════════════
+        function setupOptionChips() {
+            document.querySelectorAll('.option-chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    if (chip.dataset.type) {
+                        // Single select for test type
+                        chip.parentElement.querySelectorAll('.option-chip').forEach(c => c.classList.remove('active'));
+                        chip.classList.add('active');
+                    } else {
+                        // Toggle for options
+                        chip.classList.toggle('active');
+                    }
+                });
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // API CALLS
+        // ═══════════════════════════════════════════════════════════════
+        async function apiCall(endpoint, method = 'GET', body = null) {
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+            if (body) options.body = JSON.stringify(body);
+            
+            const response = await fetch(`${API_BASE}${endpoint}`, options);
+            return response.json();
+        }
+
+        async function loadDashboardStats() {
+            try {
+                const stats = await apiCall('/dashboard/stats');
+                document.getElementById('stat-tests').textContent = stats.testsRun || 0;
+                document.getElementById('stat-passed').textContent = stats.testsRun > 0 
+                    ? Math.round((stats.testsPassed / stats.testsRun) * 100) + '%' 
+                    : '0%';
+                document.getElementById('stat-scans').textContent = stats.securityScans || 0;
+                document.getElementById('stat-vulns').textContent = stats.vulnerabilitiesFound || 0;
+            } catch (e) {
+                console.log('Stats not available yet');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // TEST RUNNER
+        // ═══════════════════════════════════════════════════════════════
+        async function runTest() {
+            const url = document.getElementById('test-url').value;
+            const testType = document.querySelector('.option-chip[data-type].active')?.dataset.type || 'functional';
+            
+            if (!url) {
+                showToast('Please enter a URL', 'error');
+                return;
+            }
+            
+            document.getElementById('test-results').style.display = 'block';
+            document.getElementById('test-results').innerHTML = '';
+            addResultLine('test-results', '⏳ Starting test...', 'info');
+            
+            try {
+                const result = await apiCall('/tests/run', 'POST', { url, testType, options: {} });
+                addResultLine('test-results', `📋 Test ID: ${result.testId}`, 'info');
+                showToast('Test started!', 'success');
+            } catch (e) {
+                addResultLine('test-results', `❌ Error: ${e.message}`, 'error');
+                showToast('Failed to start test', 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SECURITY SCANNER
+        // ═══════════════════════════════════════════════════════════════
+        async function runSecurityScan() {
+            const url = document.getElementById('scan-url').value;
+            const scanTypes = Array.from(document.querySelectorAll('.option-chip[data-scan].active'))
+                .map(c => c.dataset.scan);
+            
+            if (!url) {
+                showToast('Please enter a URL', 'error');
+                return;
+            }
+            
+            document.getElementById('scan-results').style.display = 'block';
+            document.getElementById('scan-results').innerHTML = '';
+            addResultLine('scan-results', '🔍 Starting security scan...', 'info');
+            
+            try {
+                const result = await apiCall('/security/scan', 'POST', { url, scanTypes });
+                addResultLine('scan-results', `📋 Scan ID: ${result.scanId}`, 'info');
+                showToast('Security scan started!', 'success');
+            } catch (e) {
+                addResultLine('scan-results', `❌ Error: ${e.message}`, 'error');
+                showToast('Failed to start scan', 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // GHOST MODE
+        // ═══════════════════════════════════════════════════════════════
+        async function startGhostSession() {
+            const url = document.getElementById('ghost-url').value;
+            
+            document.getElementById('ghost-results').style.display = 'block';
+            document.getElementById('ghost-results').innerHTML = '';
+            addResultLine('ghost-results', '👻 Initializing Ghost Mode...', 'info');
+            
+            try {
+                const result = await apiCall('/ghost/start', 'POST', { targetUrl: url, options: {} });
+                currentGhostSession = result.sessionId;
+                
+                addResultLine('ghost-results', `✅ Ghost session active`, 'success');
+                addResultLine('ghost-results', `🎭 Fingerprint generated`, 'info');
+                addResultLine('ghost-results', `  Canvas: ${result.fingerprint.canvas}`, 'info');
+                addResultLine('ghost-results', `  WebGL: ${result.fingerprint.webgl}`, 'info');
+                addResultLine('ghost-results', `  Timezone: ${result.fingerprint.timezone}`, 'info');
+                
+                document.getElementById('start-ghost-btn').disabled = true;
+                document.getElementById('stop-ghost-btn').disabled = false;
+                showToast('Ghost Mode activated!', 'success');
+            } catch (e) {
+                addResultLine('ghost-results', `❌ Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function stopGhostSession() {
+            if (!currentGhostSession) return;
+            
+            try {
+                await apiCall('/ghost/stop', 'POST', { sessionId: currentGhostSession });
+                addResultLine('ghost-results', '🛑 Ghost session stopped', 'warning');
+                currentGhostSession = null;
+                document.getElementById('start-ghost-btn').disabled = false;
+                document.getElementById('stop-ghost-btn').disabled = true;
+                showToast('Ghost session stopped', 'success');
+            } catch (e) {
+                showToast('Failed to stop session', 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // AI SELF-HEALING
+        // ═══════════════════════════════════════════════════════════════
+        async function healSelector() {
+            const brokenSelector = document.getElementById('broken-selector').value;
+            const pageContext = document.getElementById('page-context').value;
+            
+            if (!brokenSelector) {
+                showToast('Please enter a broken selector', 'error');
+                return;
+            }
+            
+            document.getElementById('heal-results').style.display = 'block';
+            document.getElementById('heal-results').innerHTML = '';
+            addResultLine('heal-results', '🔧 Analyzing selector...', 'info');
+            
+            try {
+                const result = await apiCall('/ai/heal', 'POST', { brokenSelector, pageContext });
+                
+                addResultLine('heal-results', `✅ Healed! Confidence: ${(result.confidence * 100).toFixed(1)}%`, 'success');
+                addResultLine('heal-results', `  Original: ${result.original}`, 'error');
+                addResultLine('heal-results', `  Healed: ${result.healed}`, 'success');
+                addResultLine('heal-results', ``, 'info');
+                addResultLine('heal-results', `📋 Alternatives:`, 'info');
+                result.alternatives.forEach(alt => {
+                    addResultLine('heal-results', `  → ${alt.selector} (${(alt.confidence * 100).toFixed(0)}%)`, 'info');
+                });
+                
+                showToast('Selector healed!', 'success');
+            } catch (e) {
+                addResultLine('heal-results', `❌ Error: ${e.message}`, 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // TEST GENERATOR
+        // ═══════════════════════════════════════════════════════════════
+        async function generateTest() {
+            const targetUrl = document.getElementById('gen-url').value;
+            const description = document.getElementById('test-description').value;
+            
+            if (!description) {
+                showToast('Please enter a test description', 'error');
+                return;
+            }
+            
+            document.getElementById('gen-results').style.display = 'block';
+            document.getElementById('gen-results').innerHTML = '';
+            addResultLine('gen-results', '✨ Generating test...', 'info');
+            
+            try {
+                const result = await apiCall('/ai/generate', 'POST', { description, targetUrl });
+                
+                addResultLine('gen-results', `✅ Test generated: ${result.test.name}`, 'success');
+                addResultLine('gen-results', ``, 'info');
+                addResultLine('gen-results', `📋 Steps:`, 'info');
+                result.test.steps.forEach((step, i) => {
+                    addResultLine('gen-results', `  ${i + 1}. ${step}`, 'info');
+                });
+                addResultLine('gen-results', ``, 'info');
+                addResultLine('gen-results', `📝 Code:`, 'info');
+                result.test.code.split('\n').forEach(line => {
+                    addResultLine('gen-results', line, 'info');
+                });
+                
+                showToast('Test generated!', 'success');
+            } catch (e) {
+                addResultLine('gen-results', `❌ Error: ${e.message}`, 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SETTINGS
+        // ═══════════════════════════════════════════════════════════════
+        function saveSettings() {
+            const name = document.getElementById('settings-name').value;
+            const email = document.getElementById('settings-email').value;
+            
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            user.name = name;
+            user.email = email;
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            loadUserData();
+            showToast('Settings saved!', 'success');
+        }
+
+        function copyLicense() {
+            const license = document.getElementById('license-key').value;
+            navigator.clipboard.writeText(license);
+            showToast('License copied!', 'success');
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'auth.html';
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // UTILITIES
+        // ═══════════════════════════════════════════════════════════════
+        function addResultLine(containerId, text, type = 'info') {
+            const container = document.getElementById(containerId);
+            const line = document.createElement('div');
+            line.className = `result-line ${type}`;
+            line.textContent = text;
+            container.appendChild(line);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const msg = document.getElementById('toast-message');
+            
+            icon.textContent = type === 'success' ? '✓' : '⚠️';
+            msg.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Demo user for testing
+        if (!localStorage.getItem('user')) {
+            localStorage.setItem('user', JSON.stringify({
+                name: 'Dimitar Prodromov',
+                email: 'dimitar@qantum.dev',
+                license: 'QA-DEMO-2025-XXXX',
+                plan: 'pro'
+            }));
+            loadUserData();
+        }
+    </script>
+</body>
+</html>

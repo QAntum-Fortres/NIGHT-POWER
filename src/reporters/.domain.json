@@ -1,0 +1,16 @@
+{
+  "domainName": "reporters",
+  "layer": "REALITY",
+  "purpose": "reporters Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [
+    "api"
+  ],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 864,
+  "healthScore": 100,
+  "integrityHash": "c0a4650f4ae4122d",
+  "lastUpdated": "2025-12-30T20:50:15.863Z",
+  "violations": []
+}

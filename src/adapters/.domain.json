@@ -1,0 +1,21 @@
+{
+  "domainName": "adapters",
+  "layer": "CHEMISTRY",
+  "purpose": "adapters Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 3,
+  "lineCount": 1517,
+  "healthScore": 90,
+  "integrityHash": "0a08148993c86014",
+  "lastUpdated": "2025-12-30T20:50:15.767Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "adapters is isolated - no dependencies or dependents",
+      "source": "adapters"
+    }
+  ]
+}

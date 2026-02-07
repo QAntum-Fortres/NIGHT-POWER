@@ -1,0 +1,53 @@
+[package]
+name = "crypto_rust"
+version = "1.0.0"
+edition = "2021"
+description = "High-performance cryptographic operations for QAntum Framework"
+license = "MIT"
+authors = ["Dimitar Prodromov <dimitar@QAntum.ai>"]
+repository = "https://github.com/QAntum-Fortres/SaaS"
+
+[[bin]]
+name = "crypto_rust"
+path = "src/main.rs"
+
+[dependencies]
+# Cryptographic primitives
+aes-gcm = "0.10"
+blake3 = "1.5"
+argon2 = "0.5"
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+rand = "0.8"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# IPC communication
+interprocess = "2.0"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Optional CUDA support (uncomment when needed)
+# cuda-sys = "0.2"
+# cust = "0.3"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 1
+
+[features]
+default = []
+cuda = []  # Enable for GPU acceleration
+simd = []  # Enable for SIMD optimizations

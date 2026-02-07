@@ -1,0 +1,21 @@
+{
+  "domainName": "metrics",
+  "layer": "CHEMISTRY",
+  "purpose": "metrics Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 602,
+  "healthScore": 90,
+  "integrityHash": "226aebcc3e013e4e",
+  "lastUpdated": "2025-12-30T20:50:15.843Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "metrics is isolated - no dependencies or dependents",
+      "source": "metrics"
+    }
+  ]
+}

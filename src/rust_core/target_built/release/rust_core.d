@@ -1,0 +1,1 @@
+C:\Users\papic\Desktop\MY_APPLICATIONS\AETERNA-QA-TEMPLATE\MrMindQATool\rust_core_better_tmp\./target_built\release\rust_core.dll: C:\Users\papic\Desktop\MY_APPLICATIONS\AETERNA-QA-TEMPLATE\MrMindQATool\rust_core_better_tmp\build.rs C:\Users\papic\Desktop\MY_APPLICATIONS\AETERNA-QA-TEMPLATE\MrMindQATool\rust_core_better_tmp\src\lib.rs

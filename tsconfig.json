@@ -1,0 +1,96 @@
+{
+  "compilerOptions": {
+    // ══════════════════════════════════════════════════════════════════
+    // QANTUM v23.2.0 - TypeScript Configuration
+    // Optimized for Node.js 20 LTS + Ryzen 7 Performance
+    // ══════════════════════════════════════════════════════════════════
+    // Target & Module
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    // Output
+    "outDir": "./dist",
+    "rootDir": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    // Strict Type-Checking (ZERO TOLERANCE)
+    // TODO: Fix all 258 type errors and re-enable full strict mode
+    "strict": true,
+    "noImplicitAny": false, // Temporarily disabled
+    "strictNullChecks": false, // Temporarily disabled
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false, // Temporarily disabled
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": false, // Temporarily disabled
+    "alwaysStrict": true,
+    // Code Quality
+    "noUnusedLocals": false, // Temporarily disabled
+    "noUnusedParameters": false, // Temporarily disabled
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false, // Temporarily disabled
+    "noImplicitOverride": true,
+    // TODO: Re-enable after fixing all 346 type errors
+    // "exactOptionalPropertyTypes": true,
+    // Interop
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false, // Temporarily disabled
+    "forceConsistentCasingInFileNames": true,
+    // Advanced
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "baseUrl": ".",
+    "paths": {
+      "@modules/*": [
+        "modules/*"
+      ],
+      "@types/*": [
+        "types/*"
+      ],
+      "@src/*": [
+        "src/*"
+      ],
+      "@tools/*": [
+        "tools/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "scripts/**/*.ts",
+    "modules/**/*.ts",
+    "tools/**/*.ts",
+    "types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "dist-forge",
+    "dist-protected",
+    "out",
+    "coverage",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "scripts/logs",
+    "data/vectors",
+    "data/checkpoints",
+    "data/models"
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}

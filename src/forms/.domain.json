@@ -1,0 +1,21 @@
+{
+  "domainName": "forms",
+  "layer": "CHEMISTRY",
+  "purpose": "forms Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 1113,
+  "healthScore": 90,
+  "integrityHash": "9a18ac4abefb83b1",
+  "lastUpdated": "2025-12-30T20:50:15.815Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "forms is isolated - no dependencies or dependents",
+      "source": "forms"
+    }
+  ]
+}

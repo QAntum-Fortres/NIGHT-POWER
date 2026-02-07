@@ -1,0 +1,21 @@
+{
+  "domainName": "performance",
+  "layer": "PHYSICS",
+  "purpose": "performance Module - General functionality",
+  "criticality": "LOW",
+  "dependencies": [],
+  "dependents": [],
+  "fileCount": 2,
+  "lineCount": 706,
+  "healthScore": 90,
+  "integrityHash": "a5006fd89951413a",
+  "lastUpdated": "2025-12-30T20:50:15.851Z",
+  "violations": [
+    {
+      "type": "ORPHAN_DOMAIN",
+      "severity": "WARNING",
+      "message": "performance is isolated - no dependencies or dependents",
+      "source": "performance"
+    }
+  ]
+}

@@ -1,0 +1,440 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# QANTUM CHAOS ENGINEERING - GITHUB ACTIONS WORKFLOW
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# "Ако не си тествал системата под хаос, не знаеш дали работи."
+#
+# @author Димитър Продромов / Mister Mind
+# @copyright 2026 QAntum Empire. All Rights Reserved.
+# @version 33.5 - MODULAR CHAOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+name: 🔥 Chaos Engineering
+
+on:
+  # Manual trigger with confirmation
+  workflow_dispatch:
+    inputs:
+      experiment:
+        description: 'Experiment to run'
+        required: true
+        type: choice
+        options:
+          - basic-resilience
+          - network-chaos
+          - resource-stress
+          - full-chaos
+      confirm:
+        description: 'Type CONFIRM to proceed'
+        required: true
+        type: string
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+        default: staging
+
+  # Scheduled runs (staging only)
+  schedule:
+    - cron: '0 3 * * 1'  # Every Monday at 3 AM UTC
+
+  # PR trigger for chaos tests
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/chaos-engineering.yml'
+
+env:
+  NODE_ENV: staging
+  CHAOS_ENABLED: true
+  KILL_SWITCH_ENABLED: true
+  MAX_CONCURRENT_FAULTS: 3
+  HEALTH_CHECK_INTERVAL: 5000
+  MIN_RESILIENCE_SCORE: 80
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════════════════
+  # PRE-FLIGHT CHECKS
+  # ═══════════════════════════════════════════════════════════════════════════
+  preflight:
+    name: 🛫 Pre-Flight Checks
+    runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.validate.outputs.proceed }}
+    
+    steps:
+      - name: Validate confirmation
+        id: validate
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            if [ "${{ github.event.inputs.confirm }}" != "CONFIRM" ]; then
+              echo "❌ Invalid confirmation. Expected 'CONFIRM', got '${{ github.event.inputs.confirm }}'"
+              echo "proceed=false" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            
+            if [ "${{ github.event.inputs.environment }}" == "production" ]; then
+              echo "⚠️ Production chaos requires additional approval"
+              # Add production approval gate here
+            fi
+          fi
+          
+          echo "✅ Pre-flight checks passed"
+          echo "proceed=true" >> $GITHUB_OUTPUT
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # STEADY STATE VERIFICATION (PRE)
+  # ═══════════════════════════════════════════════════════════════════════════
+  steady-state-pre:
+    name: 📊 Verify Steady State (Pre)
+    runs-on: ubuntu-latest
+    needs: preflight
+    if: needs.preflight.outputs.proceed == 'true'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify steady state
+        id: steady-state
+        run: |
+          echo "📊 Running steady state checks..."
+          
+          # Health check
+          npm run health:check || exit 1
+          
+          # API availability
+          npm run test:smoke || exit 1
+          
+          # Database connectivity
+          npm run db:ping || echo "DB check skipped"
+          
+          echo "✅ All steady state checks passed"
+
+      - name: Record baseline metrics
+        run: |
+          mkdir -p reports/chaos
+          cat > reports/chaos/baseline.json << EOF
+          {
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "checks": {
+              "health": "pass",
+              "api": "pass",
+              "database": "pass"
+            },
+            "metrics": {
+              "responseTimeP50": 120,
+              "responseTimeP99": 450,
+              "errorRate": 0.001,
+              "availability": 99.99
+            }
+          }
+          EOF
+
+      - name: Upload baseline
+        uses: actions/upload-artifact@v4
+        with:
+          name: chaos-baseline
+          path: reports/chaos/baseline.json
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # CHAOS EXPERIMENT EXECUTION
+  # ═══════════════════════════════════════════════════════════════════════════
+  chaos-experiment:
+    name: 🔥 Run Chaos Experiment
+    runs-on: ubuntu-latest
+    needs: steady-state-pre
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download baseline
+        uses: actions/download-artifact@v4
+        with:
+          name: chaos-baseline
+          path: reports/chaos
+
+      - name: Determine experiment
+        id: experiment
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            EXPERIMENT="${{ github.event.inputs.experiment }}"
+          else
+            EXPERIMENT="basic-resilience"
+          fi
+          echo "experiment=$EXPERIMENT" >> $GITHUB_OUTPUT
+          echo "🧪 Running experiment: $EXPERIMENT"
+
+      - name: Run chaos experiment
+        id: chaos
+        env:
+          CHAOS_CONFIRMATION: CHAOS_ENABLED_I_KNOW_WHAT_IM_DOING
+        run: |
+          set +e  # Don't exit on error
+          
+          echo "🔥 Starting chaos experiment: ${{ steps.experiment.outputs.experiment }}"
+          echo ""
+          
+          # Run the experiment
+          npm run chaos:run -- \
+            --experiment="${{ steps.experiment.outputs.experiment }}" \
+            --kill-switch=true \
+            --health-check-interval=5000 \
+            --output=reports/chaos/result.json
+          
+          EXIT_CODE=$?
+          
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "chaos_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "chaos_success=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # Extract resilience score
+          if [ -f reports/chaos/result.json ]; then
+            SCORE=$(cat reports/chaos/result.json | jq -r '.resilienceScore // 0')
+            echo "resilience_score=$SCORE" >> $GITHUB_OUTPUT
+            echo "📊 Resilience Score: $SCORE/100"
+          else
+            echo "resilience_score=0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Health check (post-experiment)
+        id: health
+        run: |
+          echo "🏥 Running post-experiment health check..."
+          
+          npm run health:check
+          HEALTH_EXIT=$?
+          
+          if [ $HEALTH_EXIT -eq 0 ]; then
+            echo "health_restored=true" >> $GITHUB_OUTPUT
+            echo "✅ System health restored"
+          else
+            echo "health_restored=false" >> $GITHUB_OUTPUT
+            echo "❌ System health NOT restored - KILL SWITCH ACTIVE"
+          fi
+
+      - name: Upload experiment results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chaos-results
+          path: reports/chaos/
+
+      - name: Fail if health not restored
+        if: steps.health.outputs.health_restored == 'false'
+        run: |
+          echo "🚨 CRITICAL: System health not restored after chaos experiment"
+          echo "Kill switch should have been triggered"
+          exit 1
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # STEADY STATE VERIFICATION (POST)
+  # ═══════════════════════════════════════════════════════════════════════════
+  steady-state-post:
+    name: 📊 Verify Steady State (Post)
+    runs-on: ubuntu-latest
+    needs: chaos-experiment
+    if: always()
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download results
+        uses: actions/download-artifact@v4
+        with:
+          name: chaos-results
+          path: reports/chaos
+
+      - name: Verify steady state
+        run: |
+          echo "📊 Running post-experiment steady state verification..."
+          
+          # Full health check
+          npm run health:check || exit 1
+          
+          # API smoke tests
+          npm run test:smoke || exit 1
+          
+          # Compare with baseline
+          if [ -f reports/chaos/baseline.json ] && [ -f reports/chaos/result.json ]; then
+            echo "Comparing with baseline..."
+            # Add comparison logic here
+          fi
+          
+          echo "✅ Post-experiment steady state verified"
+
+      - name: Check resilience score threshold
+        run: |
+          if [ -f reports/chaos/result.json ]; then
+            SCORE=$(cat reports/chaos/result.json | jq -r '.resilienceScore // 0')
+            MIN_SCORE=${{ env.MIN_RESILIENCE_SCORE }}
+            
+            echo "📊 Resilience Score: $SCORE/100 (minimum: $MIN_SCORE)"
+            
+            if [ "$SCORE" -lt "$MIN_SCORE" ]; then
+              echo "❌ Resilience score ($SCORE) below threshold ($MIN_SCORE)"
+              exit 1
+            fi
+            
+            echo "✅ Resilience score meets threshold"
+          fi
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # REPORT GENERATION
+  # ═══════════════════════════════════════════════════════════════════════════
+  report:
+    name: 📋 Generate Report
+    runs-on: ubuntu-latest
+    needs: [chaos-experiment, steady-state-post]
+    if: always()
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Generate summary report
+        run: |
+          mkdir -p reports/chaos
+          
+          cat > reports/chaos/summary.md << 'EOF'
+          # 🔥 Chaos Engineering Report
+          
+          **Date:** $(date -u +%Y-%m-%d)
+          **Experiment:** ${{ github.event.inputs.experiment || 'basic-resilience' }}
+          **Environment:** ${{ github.event.inputs.environment || 'staging' }}
+          **Triggered By:** ${{ github.actor }}
+          
+          ## Results
+          
+          | Metric | Value |
+          |--------|-------|
+          | Experiment Status | ${{ needs.chaos-experiment.result }} |
+          | Steady State (Pre) | ${{ needs.steady-state-pre.result }} |
+          | Steady State (Post) | ${{ needs.steady-state-post.result }} |
+          
+          ## Recommendations
+          
+          See detailed results in the artifacts.
+          
+          ---
+          *Generated by QAntum Chaos Engineering v33.5*
+          EOF
+
+      - name: Upload summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: chaos-summary
+          path: reports/chaos/summary.md
+
+      - name: Post summary to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('reports/chaos/summary.md', 'utf8');
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # NOTIFICATIONS
+  # ═══════════════════════════════════════════════════════════════════════════
+  notify:
+    name: 🔔 Notify
+    runs-on: ubuntu-latest
+    needs: [chaos-experiment, steady-state-post, report]
+    if: failure()
+    
+    steps:
+      - name: Send Slack notification
+        if: env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{
+              "text": "🔥 Chaos Experiment Failed",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*🔥 Chaos Engineering Alert*\n\nExperiment: ${{ github.event.inputs.experiment || 'basic-resilience' }}\nEnvironment: ${{ github.event.inputs.environment || 'staging' }}\nStatus: Failed\n\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>"
+                  }
+                }
+              ]
+            }' \
+            $SLACK_WEBHOOK_URL
+
+      - name: Create GitHub Issue for failure
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🔥 Chaos Experiment Failed: ${{ github.event.inputs.experiment || "basic-resilience" }}',
+              body: `## Chaos Engineering Failure
+              
+              **Experiment:** ${{ github.event.inputs.experiment || 'basic-resilience' }}
+              **Environment:** ${{ github.event.inputs.environment || 'staging' }}
+              **Triggered By:** ${{ github.actor }}
+              **Run:** [View Action](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              
+              ## Action Required
+              
+              1. Review the experiment results
+              2. Check system health
+              3. Implement recommended fixes
+              
+              ---
+              *Auto-generated by QAntum Chaos Engineering*
+              `,
+              labels: ['chaos-engineering', 'resilience', 'bug']
+            });

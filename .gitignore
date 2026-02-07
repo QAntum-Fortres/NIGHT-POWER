@@ -1,0 +1,74 @@
+# Ignore everything
+*
+
+# Except these files
+!README.md
+!LICENSE
+!package.json
+!tsconfig.json
+!src/
+!src/**
+!.npmignore
+!.gitignore
+
+# Include app directory (user auth pages)
+!app/
+!app/**
+
+# Include examples
+!examples/
+!examples/**
+
+# Include docs
+!docs/
+!docs/**
+
+# Include GitHub config
+!.github/
+!.github/**
+
+# Include landing page
+!index.html
+!landing/
+!landing/**
+
+# Include scripts
+!scripts/
+!scripts/**
+
+# Include Rust core engine
+!rust_core/
+!rust_core/**
+
+# Include GAMMA deployment system
+!GAMMA_INFRA/
+!GAMMA_INFRA/**
+
+# Include .gitattributes for language detection
+!.gitattributes
+
+# Include data (progress tracking)
+!data/
+!data/**
+!data/marketing-progress.json
+
+# Security - NEVER commit these
+.env
+.env.*
+*.key
+*.pem
+secrets/
+credentials/
+
+# Include documentation
+!SECURITY.md
+!QANTUM-SUCCESS-ROADMAP.md
+!PROJECT-STRUCTURE.md
+!CONTRIBUTING.md
+!CHANGELOG.md
+!.eslintrc.json
+!test-all.js
+
+# Include tests
+!tests/
+!tests/**
