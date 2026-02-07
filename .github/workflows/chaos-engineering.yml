@@ -173,7 +173,7 @@ jobs:
         run: npm ci
 
       - name: Download baseline
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: chaos-baseline
           path: reports/chaos
@@ -276,7 +276,7 @@ jobs:
         run: npm ci
 
       - name: Download results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: chaos-results
           path: reports/chaos
@@ -329,7 +329,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           path: artifacts
 
