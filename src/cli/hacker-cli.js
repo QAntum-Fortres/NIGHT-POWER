@@ -1,5 +1,3 @@
-import { logger } from '../api/unified/utils/logger';
-
 #!/usr/bin/env node
 /**
  * 🧠 QANTUM - The Hacker CLI
@@ -13,9 +11,18 @@ import { logger } from '../api/unified/utils/logger';
  * @version 1.0.0-QANTUM-PRIME
  */
 
-const chalk = require('chalk');
-const figlet = require('figlet');
-const cliProgress = require('cli-progress');
+import chalk from 'chalk';
+import cliProgress from 'cli-progress';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+// Simple logger wrapper for CLI output
+const logger = {
+    debug: (...args) => console.log(...args),
+    error: (...args) => console.error(...args),
+    info: (...args) => console.info(...args),
+    warn: (...args) => console.warn(...args)
+};
 
 // ============================================================
 // ASCII ART BANNER
@@ -279,7 +286,7 @@ class QAntumCLI {
 
     // 👻 Ghost Protocol Commands
     async runGhostProtocol(args) {
-        const { ghostCapture, ghostList } = require('./ghost-precog-cli');
+        const { ghostCapture, ghostList } = await import('./ghost-precog-cli.js');
         const subCommand = process.argv[3];
         
         if (subCommand === 'list') {
@@ -291,7 +298,7 @@ class QAntumCLI {
 
     // 🔮 Pre-Cog Commands
     async runPreCog(args) {
-        const { precogAnalyze, precogRun } = require('./ghost-precog-cli');
+        const { precogAnalyze, precogRun } = await import('./ghost-precog-cli.js');
         const subCommand = process.argv[3];
         
         if (subCommand === 'run') {
@@ -303,7 +310,7 @@ class QAntumCLI {
 
     // 🏰 Fortress Commands
     async runFortress(args) {
-        const { fortressObfuscate, fortressLicense } = require('./fortress-swarm-cli');
+        const { fortressObfuscate, fortressLicense } = await import('./fortress-swarm-cli.js');
         const subCommand = process.argv[3];
         const arg = process.argv[4];
         
@@ -320,7 +327,7 @@ class QAntumCLI {
 
     // 🐝 Swarm Commands
     async runSwarm(args) {
-        const { swarmRun, swarmStatus, swarmDashboard } = require('./fortress-swarm-cli');
+        const { swarmRun, swarmStatus, swarmDashboard } = await import('./fortress-swarm-cli.js');
         const subCommand = process.argv[3];
         const arg = process.argv[4];
         
@@ -359,7 +366,7 @@ class QAntumCLI {
             
             if (arg) {
                 try {
-                    const { AutonomousExplorer } = require('../cognitive/autonomous-explorer');
+                    const { AutonomousExplorer } = await import('../cognitive/autonomous-explorer.js');
                     const explorer = new AutonomousExplorer({
                         maxPages: 50,
                         parallelWorkers: 4
@@ -375,11 +382,11 @@ class QAntumCLI {
             log('This generates tests from discovered site maps', 'info');
             
             try {
-                const fs = require('fs');
+                const fs = await import('fs');
                 const sitemapPath = arg || './exploration-data/sitemap.json';
                 
                 if (fs.existsSync(sitemapPath)) {
-                    const { AutoTestFactory } = require('../cognitive/auto-test-factory');
+                    const { AutoTestFactory } = await import('../cognitive/auto-test-factory.js');
                     const siteMapData = JSON.parse(fs.readFileSync(sitemapPath, 'utf-8'));
                     
                     const factory = new AutoTestFactory();
@@ -401,7 +408,7 @@ class QAntumCLI {
         } else if (subCommand === 'heal') {
             log('Self-Healing V2 Status', 'healing');
             try {
-                const { SelfHealingV2 } = require('../cognitive/self-healing-v2');
+                const { SelfHealingV2 } = await import('../cognitive/self-healing-v2.js');
                 const healer = new SelfHealingV2();
                 const stats = healer.getStatistics();
                 
@@ -419,7 +426,7 @@ class QAntumCLI {
             
             if (arg) {
                 try {
-                    const { CognitiveOrchestrator } = require('../cognitive/index');
+                    const { CognitiveOrchestrator } = await import('../cognitive/index.js');
                     const orchestrator = new CognitiveOrchestrator();
                     const result = await orchestrator.autonomousRun(arg);
                     log(`Pipeline complete: ${result.testsGenerated} tests generated`, 'success');
@@ -598,4 +605,4 @@ const command = args[0] || 'help';
 const cli = new QAntumCLI();
 cli.run(command).catch(console.error);
 
-module.exports = { QAntumCLI, log, colors, displayEngineStatus, displayTestRun, displayHealing };
+export { QAntumCLI, log, colors, displayEngineStatus, displayTestRun, displayHealing };

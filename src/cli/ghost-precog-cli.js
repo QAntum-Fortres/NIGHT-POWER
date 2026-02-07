@@ -6,11 +6,18 @@
  * @version 1.0.0-QANTUM-PRIME
  */
 
-const chalk = require('chalk');
-const figlet = require('figlet');
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import chalk from 'chalk';
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+
+// Simple logger wrapper for CLI output
+const logger = {
+    debug: (...args) => console.log(...args),
+    error: (...args) => console.error(...args),
+    info: (...args) => console.info(...args),
+    warn: (...args) => console.warn(...args)
+};
 
 // ============================================================
 // CLI BANNER
@@ -268,7 +275,7 @@ function sleep(ms) {
 // ============================================================
 // EXPORTS
 // ============================================================
-module.exports = {
+export {
     showBanner,
     ghostCapture,
     ghostList,
@@ -279,7 +286,9 @@ module.exports = {
 // ============================================================
 // CLI ENTRY POINT
 // ============================================================
-if (require.main === module) {
+// Check if this is the main module (ES module version)
+const isMainModule = import.meta.url === `file://${process.argv[1]}`;
+if (isMainModule) {
     const command = process.argv[2];
     const arg = process.argv[3];
     

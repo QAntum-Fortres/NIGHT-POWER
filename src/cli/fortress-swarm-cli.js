@@ -7,10 +7,16 @@
  * @version 1.0.0-QANTUM-PRIME
  */
 
-import { logger } from '../api/unified/utils/logger';
+import chalk from 'chalk';
+import path from 'path';
 
-const chalk = require('chalk');
-const path = require('path');
+// Simple logger wrapper for CLI output
+const logger = {
+    debug: (...args) => console.log(...args),
+    error: (...args) => console.error(...args),
+    info: (...args) => console.info(...args),
+    warn: (...args) => console.warn(...args)
+};
 
 // ============================================================
 // FORTRESS BANNER
@@ -237,7 +243,7 @@ function sleep(ms) {
 // ============================================================
 // EXPORTS
 // ============================================================
-module.exports = {
+export {
     showFortressBanner,
     showSwarmBanner,
     fortressObfuscate,
@@ -250,7 +256,9 @@ module.exports = {
 // ============================================================
 // CLI ENTRY POINT
 // ============================================================
-if (require.main === module) {
+// Check if this is the main module (ES module version)
+const isMainModule = import.meta.url === `file://${process.argv[1]}`;
+if (isMainModule) {
     const command = process.argv[2];
     const subCommand = process.argv[3];
     const arg = process.argv[4];
