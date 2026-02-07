@@ -145,7 +145,7 @@ jobs:
           EOF
 
       - name: Upload baseline
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: chaos-baseline
           path: reports/chaos/baseline.json
@@ -241,7 +241,7 @@ jobs:
 
       - name: Upload experiment results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: chaos-results
           path: reports/chaos/
@@ -362,7 +362,7 @@ jobs:
           EOF
 
       - name: Upload summary
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: chaos-summary
           path: reports/chaos/summary.md
